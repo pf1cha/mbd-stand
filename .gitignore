@@ -1,0 +1,11 @@
+# Python Bytecode Files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+# IDE/Editor Files
+.idea/
+# Dependency Management Files
+*.lock
+Pipfile.lock
+poetry.lock
