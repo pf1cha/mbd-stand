@@ -1,5 +1,5 @@
 class Engine:
-    def __init__(self, clock, future_event_list, end_time=None):
+    def __init__(self, future_event_list, clock=None, end_time=None):
         self.clock = clock
         self.future_event_list = future_event_list
         self.end_time = end_time
@@ -11,3 +11,6 @@ class Engine:
             if self.end_time and self.clock.get_time() > self.end_time:
                 break
             event.do()
+
+    def create_start_event(self, event):
+        self.future_event_list.add_event(event)

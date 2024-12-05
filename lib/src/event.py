@@ -1,6 +1,6 @@
 class Event:
-    def __init__(self, creation_time, applying_time, handler):
-        self.creation_time = creation_time
+    def __init__(self, applying_time, handler):
+        # self.creation_time = creation_time
         self.applying_time = applying_time
         self.handler = handler
 
