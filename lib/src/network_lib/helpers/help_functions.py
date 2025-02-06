@@ -1,4 +1,4 @@
-from lib.src.primitives.methods import Method
+from lib.src.network_lib.helpers.methods import Method
 from numpy import log2
 
 def count_steps(method, gpu_size):
