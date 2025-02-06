@@ -1,5 +1,5 @@
-from lib.src.event import Event
-from lib.src.handler import Handler
+from lib.src.core.event import Event
+from lib.src.core.handler import Handler
 from lib.src.primitives.algorithms.ring import one_step_in_ring
 from lib.src.primitives.algorithms.halving_doubling import one_step_in_halving_doubling
 from lib.src.primitives.help_functions import count_steps
@@ -27,15 +27,15 @@ class AllGatherEvent(Event):
 
 
 class AllGatherHandler(Handler):
-    def __init__(self, future_event_list, clock):
-        super().__init__(future_event_list, clock)
+    def __init__(self, future_event_list):
+        super().__init__(future_event_list)
 
     def do(self, event):
         if event.method == Method.RING:
             applying_time = one_step_in_ring(self, event)
             if event.steps == 1:
                 return applying_time
-            ring_handler = AllGatherHandler(self.future_event_list, self.clock)
+            ring_handler = AllGatherHandler(self.future_event_list)
             self.future_event_list.add_event(
                 AllGatherEvent(applying_time, ring_handler,
                                event.gpu_cards, event.data_size,
@@ -45,7 +45,7 @@ class AllGatherHandler(Handler):
             applying_time = one_step_in_halving_doubling(self, event, event.delta)
             if event.steps == 1:
                 return
-            halving_handler = AllGatherHandler(self.future_event_list, self.clock)
+            halving_handler = AllGatherHandler(self.future_event_list)
             next_delta = event.delta // 2
             self.future_event_list.add_event(
                 AllGatherEvent(applying_time, halving_handler,

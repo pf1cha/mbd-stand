@@ -1,8 +1,8 @@
 import uuid
 
 
-class GraphicCard:
+class Processor:
     def __init__(self, bandwidth, latency):
-        self.id = uuid.uuid4()
+        self.uuid = uuid.uuid4()
         self.bandwidth = bandwidth
         self.latency = latency

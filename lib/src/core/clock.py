@@ -2,7 +2,7 @@ class Clock:
     def __init__(self, current_time=0.0):
         self.current_time = current_time
 
-    def set(self, time):
+    def set_time(self, time):
         self.current_time = time
 
     def get_time(self):

@@ -1,29 +1,29 @@
 from uuid import uuid4
-from lib.src.stats import Statistic
-from lib.src.fel import FutureEventList
-from lib.src.clock import Clock
-from lib.src.handler import Handler
+from lib.src.core.stats import Statistic
+from lib.src.core.fel import FutureEventList
+from lib.src.core.clock import Clock
+
 
 class Engine:
-    def __init__(self, end_time=None):
+    def __init__(self, end_time=None, filename_stats=None):
         self.uuid = uuid4()
         self.clock = Clock()
         self.future_event_list = FutureEventList()
-        Handler(self.future_event_list, self.clock)
         self.end_time = end_time
+        self.stats = Statistic(filename_stats, self.uuid)
 
 
-    def start(self, filename_stats):
-        stat = Statistic(filename_stats, self.uuid)
+    def execute(self, filename_stats):
         while not self.future_event_list.is_empty():
             event = self.future_event_list.pop_event()
-            self.clock.set(event.applying_time)
+            self.clock.set_time(event.applying_time)
             if self.end_time and self.clock.get_time() > self.end_time:
                 break
             event.action()
-            stat.write_event(event)
-        stat.save_to_file()
+            self.stats.write_event(event)
 
+    def save_statistic(self):
+        self.stats.save_to_file()
 
     def create_start_event(self, event):
         self.future_event_list.add_event(event)
