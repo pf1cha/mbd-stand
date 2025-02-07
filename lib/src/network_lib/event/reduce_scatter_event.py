@@ -2,7 +2,7 @@ from lib.src.core.event import Event
 from lib.src.network_lib.helpers.help_functions import count_steps
 
 
-class ReduceScatterEvent(Event):
+class ReduceScatterStepEvent(Event):
     def __init__(self, applying_time, handler, processors, data_size, method, steps=None, delta=None):
         super().__init__(applying_time, handler)
         self.processors = processors

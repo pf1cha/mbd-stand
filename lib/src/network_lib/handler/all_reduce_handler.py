@@ -1,5 +1,5 @@
 from lib.src.core.handler import Handler
-from lib.src.network_lib.event.all_reduce_event import AllReduceEvent
+from lib.src.network_lib.event.all_reduce_event import AllReduceStepEvent
 from lib.src.primitives.algorithms.ring import one_step_in_ring
 from lib.src.primitives.algorithms.halving_doubling import one_step_in_halving_doubling
 from lib.src.network_lib.helpers.methods import Method
@@ -18,8 +18,8 @@ class AllReduceHandler(Handler):
                 return applying_time
             ring_handler = AllReduceHandler(self.future_event_list)
             self.future_event_list.add_event(
-                AllReduceEvent(applying_time, ring_handler,
-                               event.processors, event.data_size, event.method, event.steps - 1)
+                AllReduceStepEvent(applying_time, ring_handler,
+                                   event.processors, event.data_size, event.method, event.steps - 1)
             )
         elif event.method == Method.HALVING_DOUBLING:
             if event.steps > log2(len(event.gpu_cards)):
@@ -27,10 +27,10 @@ class AllReduceHandler(Handler):
                 halving_handler = AllReduceHandler(self.future_event_list)
                 next_delta = event.delta * 2 if 2 * event.delta != len(event.gpu_cards) else event.delta
                 self.future_event_list.add_event(
-                    AllReduceEvent(applying_time, halving_handler,
-                                   event.processors, event.data_size,
-                                   event.method, event.steps - 1,
-                                   delta=next_delta)
+                    AllReduceStepEvent(applying_time, halving_handler,
+                                       event.processors, event.data_size,
+                                       event.method, event.steps - 1,
+                                       delta=next_delta)
                 )
             else:
                 applying_time = one_step_in_halving_doubling(self, event, event.delta)
@@ -38,10 +38,10 @@ class AllReduceHandler(Handler):
                     return
                 doubling_handler = AllReduceHandler(self.future_event_list)
                 self.future_event_list.add_event(
-                    AllReduceEvent(applying_time, doubling_handler,
-                                   event.processors, event.data_size,
-                                   event.method, event.steps - 1,
-                                   delta=event.delta // 2)
+                    AllReduceStepEvent(applying_time, doubling_handler,
+                                       event.processors, event.data_size,
+                                       event.method, event.steps - 1,
+                                       delta=event.delta // 2)
                 )
         elif event.method == Method.TREE:
             pass

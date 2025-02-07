@@ -1,5 +1,5 @@
 from lib.src.core.handler import Handler
-from lib.src.network_lib.event.reduce_scatter_event import ReduceScatterEvent
+from lib.src.network_lib.event.reduce_scatter_event import ReduceScatterStepEvent
 from lib.src.primitives.algorithms.ring import one_step_in_ring
 from lib.src.primitives.algorithms.halving_doubling import one_step_in_halving_doubling
 from lib.src.network_lib.helpers.methods import Method
@@ -16,8 +16,8 @@ class ReduceScatterHandler(Handler):
                 return applying_time
             ring_handler = ReduceScatterHandler(self.future_event_list)
             self.future_event_list.add_event(
-                ReduceScatterEvent(applying_time, ring_handler,
-                                   event.processors, event.data_size, event.method, event.steps - 1)
+                ReduceScatterStepEvent(applying_time, ring_handler,
+                                       event.processors, event.data_size, event.method, event.steps - 1)
             )
         elif event.method == Method.HALVING_DOUBLING:
             applying_time = one_step_in_halving_doubling(self, event, event.delta)
@@ -26,10 +26,10 @@ class ReduceScatterHandler(Handler):
             halving_handler = ReduceScatterHandler(self.future_event_list)
             next_delta = event.delta * 2
             self.future_event_list.add_event(
-                ReduceScatterEvent(applying_time, halving_handler,
-                                   event.processors, event.data_size,
-                                   event.method, event.steps - 1,
-                                   delta=next_delta)
+                ReduceScatterStepEvent(applying_time, halving_handler,
+                                       event.processors, event.data_size,
+                                       event.method, event.steps - 1,
+                                       delta=next_delta)
             )
         elif event.method == Method.TREE:
             pass
