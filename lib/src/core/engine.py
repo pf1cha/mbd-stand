@@ -5,13 +5,15 @@ from lib.src.core.clock import Clock
 
 
 class Engine:
-    def __init__(self, end_time=None, filename_stats=None):
+    def __init__(self, end_time=None):
         self.uuid = uuid4()
         self.clock = Clock()
         self.future_event_list = FutureEventList()
         self.end_time = end_time
-        self.stats = Statistic(filename_stats, self.uuid)
+        self.stats = None
 
+    def init(self, filename_stats):
+        self.stats = Statistic(filename_stats, self.uuid)
 
     def execute(self):
         while not self.future_event_list.is_empty():
