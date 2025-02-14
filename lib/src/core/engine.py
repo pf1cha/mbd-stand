@@ -15,7 +15,8 @@ class Engine:
     def init(self, filename_stats):
         self.stats = Statistic(filename_stats, self.uuid)
 
-    def execute(self):
+    def execute(self, new_event):
+        self.future_event_list.add_event(new_event)
         while not self.future_event_list.is_empty():
             event = self.future_event_list.pop_event()
             self.clock.set_time(event.applying_time)
