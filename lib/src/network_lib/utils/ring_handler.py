@@ -22,7 +22,6 @@ def ring_walk(handler, event, data_size, flag, index=0):
     data_handler = DataTransferHandler(handler.future_event_list)
     first_index = index % len(event.network.processors)
     second_index = (index + 1) % len(event.network.processors)
-    print(bool(flag), event.steps, " sender: " , first_index, " receiver: " , second_index)
     new_event = DataTransferEvent(event.applying_time, data_handler,
                                   event.network.processors[first_index],
                                   event.network.processors[second_index],
