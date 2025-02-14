@@ -2,8 +2,5 @@ import uuid
 
 
 class Processor:
-    def __init__(self, bandwidth, latency):
+    def __init__(self):
         self.uuid = uuid.uuid4()
-        # TODO Delete the following line
-        self.bandwidth = bandwidth
-        self.latency = latency
