@@ -1,5 +1,5 @@
 from lib.src.core.event import Event
-from lib.src.network_lib.helpers.help_functions import count_steps
+from lib.src.network_lib.utils.help_functions import count_steps
 
 
 class ReduceScatterStepEvent(Event):
