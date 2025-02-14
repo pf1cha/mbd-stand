@@ -2,13 +2,13 @@ from lib.src.core.event import Event
 
 
 class DataTransferEvent(Event):
-    def __init__(self, applying_time, handler, source, target, data_size):
+    def __init__(self, applying_time, handler, source, target, data_size, bandwidth, latency):
         super().__init__(applying_time, handler)
         self.source = str(source.uuid)
         self.target = str(target.uuid)
         self.data_size = data_size
         # TODO add latency here
-        self.time = data_size / source.bandwidth
+        self.time = data_size / bandwidth + latency
 
     def to_json(self):
         return {
