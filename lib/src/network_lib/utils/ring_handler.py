@@ -1,6 +1,5 @@
 from lib.src.network_lib.handler.p2p_handler import DataTransferHandler
 from lib.src.network_lib.event.p2p_event import DataTransferEvent
-from lib.src.network_lib.utils.help_functions import max_time
 
 
 def one_step_in_ring(handler, event, flag_all_gather=False):
@@ -8,10 +7,6 @@ def one_step_in_ring(handler, event, flag_all_gather=False):
     chunk_size = event.data_size / len(event.network.processors)
     start_index = 1 if flag_all_gather else 0
     applying_time = ring_walk(handler, event, chunk_size, flag_all_gather, index=start_index)
-    # If the gpu cards are all the same and have the same bandwidth,
-    # the time to apply the event is the same for all of them
-    applying_time2 = event.applying_time + max_time(event.network.processors, chunk_size)
-    print(applying_time, applying_time2)
     return applying_time
 
 
