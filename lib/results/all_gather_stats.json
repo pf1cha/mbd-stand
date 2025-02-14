@@ -1,0 +1,101 @@
+{
+    "engine_id": "7cff1d8e-be84-42b4-a8f8-6dc5a72e035f",
+    "events": [
+        {
+            "uuid": "5862842a-24d9-4c8f-91b8-10d67d06cd2c",
+            "event_type": "AllGatherStepEvent",
+            "handler_type": "AllGatherHandler",
+            "method": "HALVING_DOUBLING",
+            "applying_time": 0,
+            "data_size": 1600
+        },
+        {
+            "uuid": "14428481-11a2-46bc-9f3c-580e0dd4265e",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0,
+            "transfer_time": 16.866666666666667,
+            "gpu_source": "a98cafdd-b051-49c3-b5be-8c029093839e",
+            "gpu_destination": "5849a98a-3ea6-4fd9-9e91-271975a3f0ca",
+            "data_size": 100.0
+        },
+        {
+            "uuid": "7b78c39e-8908-44b4-bd5c-9044c5da4896",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0,
+            "transfer_time": 16.866666666666667,
+            "gpu_source": "27ae83a3-d813-4c30-baa1-ac475d7f762f",
+            "gpu_destination": "c060abb8-b05d-435e-9594-f912eb94233a",
+            "data_size": 100.0
+        },
+        {
+            "uuid": "65c15ef0-f851-4a6c-9106-73a2068c7e1f",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0,
+            "transfer_time": 16.866666666666667,
+            "gpu_source": "5849a98a-3ea6-4fd9-9e91-271975a3f0ca",
+            "gpu_destination": "a98cafdd-b051-49c3-b5be-8c029093839e",
+            "data_size": 100.0
+        },
+        {
+            "uuid": "c466f244-3843-4bab-ae90-cf8987fc172d",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0,
+            "transfer_time": 16.866666666666667,
+            "gpu_source": "c060abb8-b05d-435e-9594-f912eb94233a",
+            "gpu_destination": "27ae83a3-d813-4c30-baa1-ac475d7f762f",
+            "data_size": 100.0
+        },
+        {
+            "uuid": "1e286479-db25-4c04-833f-014c78bbb487",
+            "event_type": "AllGatherStepEvent",
+            "handler_type": "AllGatherHandler",
+            "method": "HALVING_DOUBLING",
+            "applying_time": 16.866666666666667,
+            "data_size": 1600
+        },
+        {
+            "uuid": "df4c6060-87b9-4457-9129-37c4af354f43",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 16.866666666666667,
+            "transfer_time": 33.53333333333334,
+            "gpu_source": "a98cafdd-b051-49c3-b5be-8c029093839e",
+            "gpu_destination": "27ae83a3-d813-4c30-baa1-ac475d7f762f",
+            "data_size": 200.0
+        },
+        {
+            "uuid": "e3555808-162a-4ff3-b9d3-aa1eea3098af",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 16.866666666666667,
+            "transfer_time": 33.53333333333334,
+            "gpu_source": "27ae83a3-d813-4c30-baa1-ac475d7f762f",
+            "gpu_destination": "5849a98a-3ea6-4fd9-9e91-271975a3f0ca",
+            "data_size": 200.0
+        },
+        {
+            "uuid": "8e787be8-bc66-4746-a988-6b3f28e83ab0",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 16.866666666666667,
+            "transfer_time": 33.53333333333334,
+            "gpu_source": "27ae83a3-d813-4c30-baa1-ac475d7f762f",
+            "gpu_destination": "a98cafdd-b051-49c3-b5be-8c029093839e",
+            "data_size": 200.0
+        },
+        {
+            "uuid": "50018a6c-e078-4925-b654-de97e8a7ee02",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 16.866666666666667,
+            "transfer_time": 33.53333333333334,
+            "gpu_source": "5849a98a-3ea6-4fd9-9e91-271975a3f0ca",
+            "gpu_destination": "27ae83a3-d813-4c30-baa1-ac475d7f762f",
+            "data_size": 200.0
+        }
+    ]
+}
