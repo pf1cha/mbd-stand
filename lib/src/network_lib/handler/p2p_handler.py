@@ -7,3 +7,6 @@ class DataTransferHandler(Handler):
 
     def do(self, event):
         return
+
+    def do_on_start(self, applying_time):
+        return

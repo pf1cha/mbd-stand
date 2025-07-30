@@ -13,7 +13,7 @@ def one_step_in_ring(handler, event, flag_all_gather=False):
 # ring_walk return max applying time
 def ring_walk(handler, event, data_size, flag, index=0):
     """
-    This function creates the data transfer events for the ring
+    This function creates the data transfer handlers for the ring
     """
     if flag and index == len(event.network.processors) + 1:
         return event.applying_time

@@ -29,3 +29,10 @@ def halving_doubling_walk(handler, event, chunk_size, index=0):
     next_applying_time = halving_doubling_walk(handler, event, chunk_size, index + 1)
     max_of_two_times = max(first_event.time, second_event.time)
     return max(next_applying_time, max_of_two_times + event.applying_time)
+    # return max(next_applying_time, first_event.time + event.applying_time)
+
+
+def halving_doubling_walk_another_version(handler, event, chunk_size, index=0):
+    data_handler = DataTransferHandler(handler.future_event_list)
+    first_index = index
+    second_index = index

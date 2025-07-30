@@ -6,8 +6,8 @@ from lib.src.network_lib.utils.methods import Method
 
 
 class AllGatherStepHandler(Handler):
-    def __init__(self, future_event_list):
-        super().__init__(future_event_list)
+    def __init__(self, future_event_list, is_start_handler=False, next_handler=None):
+        super().__init__(future_event_list, is_start_handler, next_handler)
 
     def do(self, event):
         if event.method == Method.RING:
@@ -32,3 +32,14 @@ class AllGatherStepHandler(Handler):
             )
         else:
             pass
+
+    def do_on_start(self, applying_time, network=None, method=None, data_size=0):
+        init_event = AllGatherStepEvent(
+            applying_time=applying_time,
+            handler=self,
+            network=network,
+            data_size=data_size,
+            method=method,
+        )
+        self.future_event_list.add_event(init_event)
+

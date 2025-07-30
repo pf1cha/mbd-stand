@@ -9,7 +9,6 @@ def count_steps(method, processors_length):
         return processors_length - 1
     elif method == Method.HALVING_DOUBLING:
         if processors_length % 2 != 0:
-            # TODO Do research on this point
             return None
         return log2(processors_length)
     else:
