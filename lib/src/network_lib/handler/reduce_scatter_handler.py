@@ -23,15 +23,14 @@ class ReduceScatterStepHandler(Handler):
             applying_time = one_step_in_halving_doubling(self, event)
             if event.steps == 1:
                 return
-            next_delta = event.delta * 2
             self.future_event_list.add_event(
                 ReduceScatterStepEvent(applying_time, self,
                                        event.network, event.data_size,
                                        event.method, event.steps - 1,
-                                       delta=next_delta)
+                                       crt_step= event.crt_step + 1)
             )
         else:
-            pass
+            raise TypeError(f"Unsupported method: {event.method}. Supported methods are: {Method.RING}, {Method.HALVING_DOUBLING}.")
 
     def do_on_start(self, applying_time, network=None, method=None, data_size=0):
         init_event = ReduceScatterStepEvent(
