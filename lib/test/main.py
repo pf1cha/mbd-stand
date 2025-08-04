@@ -23,9 +23,4 @@ if __name__ == '__main__':
     test_engine.execute(network)
     test_engine.save_statistic()
     describe_event_in_text(filename_stats, network)
-    # step = 4
-    # step_size = 1 << (step - 1)
-    # for me in range(16):
-    #     partner = me ^ step_size
-    #     print(f"{me} -> {partner} (step size: {step_size})")
     # count_events_in_json(filename_stats)
