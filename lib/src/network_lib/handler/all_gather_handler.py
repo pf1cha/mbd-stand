@@ -17,18 +17,18 @@ class AllGatherStepHandler(Handler):
             self.future_event_list.add_event(
                 AllGatherStepEvent(applying_time, self,
                                    event.network, event.data_size,
-                                   event.method, event.steps - 1)
+                                   event.method, event.steps,
+                                   crt_step=event.crt_step + 1)
             )
         elif event.method == Method.HALVING_DOUBLING:
-            applying_time = one_step_in_halving_doubling(self, event)
-            if event.steps == 1:
+            applying_time = one_step_in_halving_doubling(self, event, 2)
+            if event.crt_step == event.steps:
                 return
-            next_delta = event.delta // 2
             self.future_event_list.add_event(
                 AllGatherStepEvent(applying_time, self,
                                    event.network, event.data_size, event.method,
-                                   steps=event.steps - 1,
-                                   delta=next_delta)
+                                   steps=event.steps,
+                                   crt_step=event.crt_step + 1)
             )
         else:
             pass

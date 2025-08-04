@@ -29,25 +29,34 @@ class AllReduceStepHandler(Handler):
                                        event.method, event.steps - 1)
                 )
         elif event.method == Method.HALVING_DOUBLING:
-            if event.steps > log2(len(event.network.processors)):
-                applying_time = one_step_in_halving_doubling(self, event)
-                next_delta = event.delta * 2 if 2 * event.delta != len(event.network.processors) else event.delta
-                self.future_event_list.add_event(
-                    AllReduceStepEvent(applying_time, self,
-                                       event.network, event.data_size,
-                                       event.method, event.steps - 1,
-                                       delta=next_delta)
-                )
-            else:
-                applying_time = one_step_in_halving_doubling(self, event)
-                if event.steps == 1:
-                    return
-                self.future_event_list.add_event(
-                    AllReduceStepEvent(applying_time, self,
-                                       event.network, event.data_size,
-                                       event.method, event.steps - 1,
-                                       delta=event.delta // 2)
-                )
+            applying_time = one_step_in_halving_doubling(self, event, 3)
+            if event.crt_step == event.steps:
+                return
+            self.future_event_list.add_event(
+                AllReduceStepEvent(applying_time, self,
+                                   event.network, event.data_size,
+                                   event.method, steps=event.steps,
+                                   crt_step=event.crt_step + 1)
+            )
+            # if event.steps > log2(len(event.network.processors)):
+            #     applying_time = one_step_in_halving_doubling(self, event)
+            #     next_delta = event.delta * 2 if 2 * event.delta != len(event.network.processors) else event.delta
+            #     self.future_event_list.add_event(
+            #         AllReduceStepEvent(applying_time, self,
+            #                            event.network, event.data_size,
+            #                            event.method, event.steps - 1,
+            #                            delta=next_delta)
+            #     )
+            # else:
+            #     applying_time = one_step_in_halving_doubling(self, event)
+            #     if event.steps == 1:
+            #         return
+            #     self.future_event_list.add_event(
+            #         AllReduceStepEvent(applying_time, self,
+            #                            event.network, event.data_size,
+            #                            event.method, event.steps - 1,
+            #                            delta=event.delta // 2)
+            #     )
         else:
             pass
 

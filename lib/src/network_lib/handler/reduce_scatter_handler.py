@@ -20,13 +20,13 @@ class ReduceScatterStepHandler(Handler):
                                        event.method, event.steps - 1)
             )
         elif event.method == Method.HALVING_DOUBLING:
-            applying_time = one_step_in_halving_doubling(self, event)
-            if event.steps == 1:
+            applying_time = one_step_in_halving_doubling(self, event, 1)
+            if event.crt_step == event.steps:
                 return
             self.future_event_list.add_event(
                 ReduceScatterStepEvent(applying_time, self,
                                        event.network, event.data_size,
-                                       event.method, event.steps - 1,
+                                       event.method, event.steps,
                                        crt_step= event.crt_step + 1)
             )
         else:

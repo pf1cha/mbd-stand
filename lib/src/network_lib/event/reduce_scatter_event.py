@@ -9,7 +9,7 @@ from lib.src.network_lib.utils.help_functions import count_steps
 # Notice Halving-Doubling method for Reduce Scatter is a Recursive-Halving.
 # Steps - the remaining steps to complete the Reduce Scatter operation.
 # At the beginning, it is calculated based on the method and the number of processors.
-# Delta - ...
+# Crt_step - the current step in the Reduce Scatter operation.
 
 
 class ReduceScatterStepEvent(Event):
