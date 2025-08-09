@@ -1,6 +1,6 @@
 from lib.src.core.handler import Handler
 from lib.src.network_lib.event.reduce_scatter_event import ReduceScatterStepEvent
-from lib.src.network_lib.utils.ring_handler import one_step_in_ring, one_step_in_ring_improved
+from lib.src.network_lib.utils.ring_handler import one_step_in_ring_improved
 from lib.src.network_lib.utils.halving_doubling_handler import one_step_in_halving_doubling
 from lib.src.network_lib.utils.methods import Method
 

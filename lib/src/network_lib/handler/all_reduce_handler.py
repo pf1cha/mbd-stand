@@ -3,7 +3,6 @@ from lib.src.network_lib.event.all_reduce_event import AllReduceStepEvent
 from lib.src.network_lib.utils.ring_handler import one_step_in_ring_improved
 from lib.src.network_lib.utils.halving_doubling_handler import one_step_in_halving_doubling
 from lib.src.network_lib.utils.methods import Method
-from numpy import log2
 
 
 class AllReduceStepHandler(Handler):

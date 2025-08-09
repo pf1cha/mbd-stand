@@ -9,14 +9,14 @@ from lib.test.helper import count_events_in_json, describe_event_in_text
 from lib.src.core.engine import Engine
 
 if __name__ == '__main__':
-    filename_stats = "lib/results/all_reduce_halving_doubling_results.json"
-    processors = [Processor() for _ in range(2 ** 3)]
+    filename_stats = "lib/results/test.json"
+    processors = [Processor() for _ in range(2 ** 2)]
     network = Network(6, 0.0, processors)
     test_engine = Engine()
     test_array = [
-        # (ReduceScatterStepHandler(test_engine.future_event_list, is_start_handler=True), Method.HALVING_DOUBLING, 6400),
-        # (AllGatherStepHandler(test_engine.future_event_list, is_start_handler=True), Method.HALVING_DOUBLING, 6400),
-        (AllReduceStepHandler(test_engine.future_event_list, is_start_handler=True), Method.HALVING_DOUBLING, 6400),
+        # (ReduceScatterStepHandler(test_engine.future_event_list, is_start_handler=True), Method.RING, 6400),
+        # (AllGatherStepHandler(test_engine.future_event_list, is_start_handler=True), Method.RING, 6400),
+        (AllReduceStepHandler(test_engine.future_event_list, is_start_handler=True), Method.RING, 6400),
     ]
     model = Model(test_array)
     test_engine.init(filename_stats, model)
