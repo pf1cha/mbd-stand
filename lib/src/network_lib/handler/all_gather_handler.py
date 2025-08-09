@@ -1,6 +1,6 @@
 from lib.src.core.handler import Handler
 from lib.src.network_lib.event.all_gather_event import AllGatherStepEvent
-from lib.src.network_lib.utils.ring_handler import one_step_in_ring
+from lib.src.network_lib.utils.ring_handler import one_step_in_ring_improved
 from lib.src.network_lib.utils.halving_doubling_handler import one_step_in_halving_doubling
 from lib.src.network_lib.utils.methods import Method
 
@@ -11,8 +11,8 @@ class AllGatherStepHandler(Handler):
 
     def do(self, event):
         if event.method == Method.RING:
-            applying_time = one_step_in_ring(self, event)
-            if event.steps == 1:
+            applying_time = one_step_in_ring_improved(self, event, 2)
+            if event.crt_step == event.steps:
                 return applying_time
             self.future_event_list.add_event(
                 AllGatherStepEvent(applying_time, self,
@@ -26,8 +26,8 @@ class AllGatherStepHandler(Handler):
                 return
             self.future_event_list.add_event(
                 AllGatherStepEvent(applying_time, self,
-                                   event.network, event.data_size, event.method,
-                                   steps=event.steps,
+                                   event.network, event.data_size,
+                                   event.method, steps=event.steps,
                                    crt_step=event.crt_step + 1)
             )
         else:
