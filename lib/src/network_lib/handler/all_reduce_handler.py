@@ -3,6 +3,7 @@ from lib.src.network_lib.event.all_reduce_event import AllReduceStepEvent
 from lib.src.network_lib.utils.ring_handler import one_step_in_ring_improved
 from lib.src.network_lib.utils.halving_doubling_handler import one_step_in_halving_doubling
 from lib.src.network_lib.utils.methods import Method
+from lib.src.network_lib.utils.help_functions import count_steps
 
 
 class AllReduceStepHandler(Handler):
@@ -34,11 +35,17 @@ class AllReduceStepHandler(Handler):
             pass
 
     def do_on_start(self, applying_time, network=None, method=None, data_size=0):
+        if network is None or method is None:
+            raise ValueError("Network and method must be provided for the start event.")
+        total_steps = count_steps(method, len(network.processors))
+        if total_steps is None:
+            raise ValueError("Number of steps is not defined or number of processors is not a power of two.")
         init_event = AllReduceStepEvent(
             applying_time=applying_time,
             handler=self,
             network=network,
             data_size=data_size,
+            steps=2 * total_steps,
             method=method,
         )
         self.future_event_list.add_event(init_event)
