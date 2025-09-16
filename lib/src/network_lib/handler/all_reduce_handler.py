@@ -32,10 +32,13 @@ class AllReduceStepHandler(Handler):
                                    crt_step=event.crt_step + 1)
             )
         else:
-            pass
+            raise TypeError(
+                f"Unsupported method: {event.method}. "
+                f"Supported methods are: {Method.RING}, {Method.HALVING_DOUBLING}."
+            )
 
     def do_on_start(self, applying_time, network=None, method=None, data_size=0):
-        if network is None or method is None:
+        if network is None or method is None or data_size == 0:
             raise ValueError("Network and method must be provided for the start event.")
         total_steps = count_steps(method, len(network.processors))
         if total_steps is None:
