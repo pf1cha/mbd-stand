@@ -4,7 +4,8 @@ class Handler:
         self.future_event_list = future_event_list
         self.index = index
         self.is_start_handler = is_start_handler
-        self.next_handler = next_handler # указатели на следующий(ие) обработчик(и)
+        self.next_handler = next_handler  # указатели на следующий(ие) обработчик(и)
+        # Maybe delete next_handler because it is not used anywhere
 
     def do(self, event):
         pass

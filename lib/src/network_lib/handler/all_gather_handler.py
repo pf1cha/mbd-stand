@@ -42,4 +42,3 @@ class AllGatherStepHandler(Handler):
             method=method,
         )
         self.future_event_list.add_event(init_event)
-

@@ -1,5 +1,6 @@
 from json import dump
 
+
 class Statistic:
     def __init__(self, filename, engine_id):
         self.filename = filename

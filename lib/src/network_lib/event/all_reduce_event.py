@@ -1,6 +1,7 @@
 from lib.src.core.event import Event
 from lib.src.network_lib.utils.help_functions import count_steps
 
+
 class AllReduceStepEvent(Event):
     def __init__(self, applying_time, handler, network, data_size, method, steps=None, delta=None, crt_step=None):
         super().__init__(applying_time, handler)
