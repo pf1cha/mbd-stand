@@ -42,8 +42,9 @@ from lib.test.playground_delete import visualisation_of_primitives
 
 
 def test_given_model():
-    filename_results = "lib/results/given_model_simple_version.json"
-    processors = [Processor() for _ in range(2 ** 9)] # 4*8*16 = 2 ** 9 = 512
+    filename_results = "lib/results/small_given_model.json"
+    # processors = [Processor() for _ in range(2 ** 9)] # 4*8*16 = 2 ** 9 = 512
+    processors = [Processor() for _ in range(4)] # 4*8*16 = 2 ** 9 = 512
     network = Network(9, 1 / 900, processors)
     engine = Engine()
     data_size = 512 * (1024 ** 3)  # 680 GB
@@ -55,9 +56,11 @@ def test_given_model():
         # Gradient synchronization
         (AllReduceStepHandler(engine.future_event_list, is_start_handler=True), Method.RING, data_size),
     ]
-    visualisation_of_primitives(sequence_of_actions)
     model = Model(sequence_of_actions)
     engine.init(filename_results, model)
     engine.execute(network)
     engine.save_statistic()
     describe_event_in_text(filename_results, network)
+
+if __name__ == '__main__':
+    test_given_model()
