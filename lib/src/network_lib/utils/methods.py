@@ -2,10 +2,24 @@ import enum
 
 
 class Method(enum.Enum):
-    RING = 1,
-    HALVING_DOUBLING = 2,
-    TREE = 3,
-    BRUCK = 4,
-    BUTTERFLY = 5
+    RING = "ring",
+    HALVING_DOUBLING = "halving_doubling",
 
-# TODO fix the methods because some of them are not necessary/important for my simulation
+    @classmethod
+    def from_string(cls, value: str):
+        normalized = value.lower().replace("_", "-").replace(" ", "-")
+        aliases = {
+            "halving-doubling": cls.HALVING_DOUBLING,
+            "halvingdoubling": cls.HALVING_DOUBLING,
+            "hd": cls.HALVING_DOUBLING,
+            "ring": cls.RING,
+        }
+        try:
+            return aliases[normalized]
+        except KeyError:
+            valid = ", ".join(sorted(aliases.keys()))
+            raise ValueError(
+                f"Unknown method '{value}'. "
+                f"Valid options are: {valid}. "
+                "Input is case-insensitive and may use '-', '_' or spaces."
+            )
