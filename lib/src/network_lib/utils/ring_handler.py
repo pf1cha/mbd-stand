@@ -1,5 +1,5 @@
-from lib.src.network_lib.handler.p2p_handler import DataTransferHandler
-from lib.src.network_lib.event.p2p_event import DataTransferEvent
+from lib.src.network_lib.handler.datatransfer_handler import DataTransferHandler
+from lib.src.network_lib.event.datatransfer_event import DataTransferEvent
 
 
 def define_ring_direction(event, type_of_primitive):
