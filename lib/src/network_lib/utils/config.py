@@ -1,10 +1,10 @@
 import json
 import yaml
 from dataclasses import dataclass, field
-from typing import List, Optional, Dict, Union
+from typing import List, Optional
 from pathlib import Path
-from lib.src.network_lib.utils.methods import *
-from lib.src.network_lib.utils.primitives import *
+from lib.src.network_lib.enums.methods import *
+from lib.src.network_lib.enums.primitives import *
 
 
 @dataclass
@@ -59,6 +59,18 @@ class AppConfig:
         if isinstance(self.data, dict):
             self.data = DataConfig(**self.data)
 
+        # Автоматическое заполнение 'where' для одной сети, если она не указана
+        if len(self.networks) == 1 and self.networks[0].where is None:
+            auto_where = []
+            if self.parallelism.TP > 1:
+                auto_where.append('tp')
+            if self.parallelism.DP > 1:
+                auto_where.append('dp')
+            if self.parallelism.PP > 1:
+                auto_where.append('pp')
+            self.networks[0].where = auto_where
+            # print(f"Auto-filled 'where' for the single network: {self.networks[0].where}")
+
         if len(self.networks) > 1:
             all_where = []
             for net in self.networks:
@@ -84,7 +96,10 @@ class AppConfig:
                 CollectiveOp(**item) for item in self.collective_communication
             ]
 
+
         for step in self.collective_communication:
+            if step.type == Primitives.P2P and step.who is None:
+                step.who = 'pp'
             if step.who == "tp" and self.parallelism.TP == 1:
                 raise ValueError(f"Collective operation {step.type} is specified for TP but TP=1 in config. "
                                  f"If you want to use TP specify it in 'parallelism' section of config.")

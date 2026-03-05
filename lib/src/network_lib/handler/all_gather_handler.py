@@ -1,8 +1,8 @@
 from lib.src.core.handler import Handler
 from lib.src.network_lib.event.all_gather_event import AllGatherStepEvent
-from lib.src.network_lib.utils.ring_handler import one_step_in_ring_improved
-from lib.src.network_lib.utils.halving_doubling_handler import one_step_in_halving_doubling
-from lib.src.network_lib.utils.methods import Method
+from lib.src.network_lib.cc_algorithms.ring_handler import one_step_in_ring_improved
+from lib.src.network_lib.cc_algorithms.halving_doubling_handler import one_step_in_halving_doubling
+from lib.src.network_lib.enums.methods import Method
 from lib.src.network_lib.utils.help_functions import count_steps
 
 

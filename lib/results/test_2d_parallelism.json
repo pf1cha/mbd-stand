@@ -1,0 +1,857 @@
+{
+    "engine_id": "9621ab34-6380-425a-a6d2-b9220fdbb4b7",
+    "events": [
+        {
+            "uuid": "9465d34a-d9da-4965-ab5b-bc14c97b8a25",
+            "event_type": "AllGatherStepEvent",
+            "handler_type": "AllGatherStepHandler",
+            "method": "HALVING_DOUBLING",
+            "applying_time": 0.0,
+            "data_size": 1
+        },
+        {
+            "uuid": "71aed656-496a-4560-87e9-bf46d820f9f4",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.0,
+            "transfer_time": 0.000725,
+            "gpu_source": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "gpu_destination": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "241ea49e-d177-4cfe-bb6a-0c70f344bf3b",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.0,
+            "transfer_time": 0.000725,
+            "gpu_source": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "gpu_destination": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "5d80785c-be25-44e5-9a82-662f7ef693ca",
+            "event_type": "AllGatherStepEvent",
+            "handler_type": "AllGatherStepHandler",
+            "method": "HALVING_DOUBLING",
+            "applying_time": 0.0,
+            "data_size": 1
+        },
+        {
+            "uuid": "cbc1f531-b84b-4865-b6c9-49616200ca93",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.0,
+            "transfer_time": 0.000725,
+            "gpu_source": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "gpu_destination": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "c13300ca-0f25-4a6f-8f7e-8efa6de80ee5",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.0,
+            "transfer_time": 0.000725,
+            "gpu_source": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "gpu_destination": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "5dab6971-91ab-41d5-8b96-ab61ae443edb",
+            "event_type": "AllGatherStepEvent",
+            "handler_type": "AllGatherStepHandler",
+            "method": "HALVING_DOUBLING",
+            "applying_time": 0.0,
+            "data_size": 1
+        },
+        {
+            "uuid": "2a8804ea-0de0-44bd-9faf-cfeb65df444a",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.0,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "gpu_destination": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "fd4a93f6-f061-4b5c-9594-a75eb67c770f",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.0,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "gpu_destination": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "edd26953-bb07-4e2f-a803-895c87afb7e3",
+            "event_type": "AllGatherStepEvent",
+            "handler_type": "AllGatherStepHandler",
+            "method": "HALVING_DOUBLING",
+            "applying_time": 0.0,
+            "data_size": 1
+        },
+        {
+            "uuid": "9da03d29-3a55-4f76-a379-909cb6e61f99",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.0,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "gpu_destination": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "8811d3d9-11ae-44c3-9d8e-6a813dd38783",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.0,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "gpu_destination": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "b3706be0-a884-42d2-bd23-26d0e7947d07",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.0,
+            "data_size": 1
+        },
+        {
+            "uuid": "e522d9f2-f19c-433a-ba15-343bb897aea9",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.0,
+            "transfer_time": 0.000725,
+            "gpu_source": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "gpu_destination": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "c5e3ec83-a0b4-4ce3-bd2b-bb0b8ccdd3e6",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.0,
+            "transfer_time": 0.000725,
+            "gpu_source": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "gpu_destination": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "42f355dd-7f85-4ae5-a23d-234a28518afb",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.000725,
+            "data_size": 1
+        },
+        {
+            "uuid": "5bc22c08-c230-42c0-8d86-6f5a4d435ad0",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.000725,
+            "transfer_time": 0.000725,
+            "gpu_source": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "gpu_destination": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "e9f06b00-b13f-46b6-8c44-83458016deb8",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.000725,
+            "transfer_time": 0.000725,
+            "gpu_source": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "gpu_destination": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "5c8e76c6-0781-4c76-8c1a-9f08a800d2a5",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.000725,
+            "data_size": 1
+        },
+        {
+            "uuid": "059880fd-1133-40a5-ad65-603c2fb7519b",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.000725,
+            "transfer_time": 0.000725,
+            "gpu_source": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "gpu_destination": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "8554bc5f-f884-443e-8420-69c6791b027a",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.000725,
+            "transfer_time": 0.000725,
+            "gpu_source": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "gpu_destination": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "3d1933e6-9445-4712-9944-0ab86d841fbe",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.00145,
+            "data_size": 1
+        },
+        {
+            "uuid": "0255c245-b28a-4432-99ed-f301037ffcb9",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.00145,
+            "transfer_time": 0.000725,
+            "gpu_source": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "gpu_destination": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "ed13c956-6479-4c09-941f-014548c6f351",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.00145,
+            "transfer_time": 0.000725,
+            "gpu_source": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "gpu_destination": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "fcda0d1e-de77-4a54-a36a-8c76ace051ef",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.00145,
+            "data_size": 1
+        },
+        {
+            "uuid": "aa0851ef-3af0-45b8-b40e-5e0bf530cb60",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.00145,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "gpu_destination": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "42757c45-793a-4ee1-8448-dc123f19f62c",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.00145,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "gpu_destination": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "4bb0e77c-f0c9-4ba8-b7c6-89f094cf3953",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.004387984496124031,
+            "data_size": 1
+        },
+        {
+            "uuid": "855686e4-9743-4708-8ff9-e6599bb43f5e",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.004387984496124031,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "gpu_destination": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "208138f7-d14f-48cd-84e4-219d0d3979ea",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.004387984496124031,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "gpu_destination": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "5ec90d72-a1da-4854-a0a8-ca77bd6afda6",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.004387984496124031,
+            "data_size": 1
+        },
+        {
+            "uuid": "c04006ad-6d71-40ff-8483-2dc0f887ac4b",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.004387984496124031,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "gpu_destination": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "046737cb-8979-458c-9273-a4d90a0e50eb",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.004387984496124031,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "gpu_destination": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "253b7341-b95a-4f31-b744-675ea9659ec6",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.007325968992248062,
+            "data_size": 1
+        },
+        {
+            "uuid": "a2c2092e-06f4-4737-9da9-13b5873db5d9",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.007325968992248062,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "gpu_destination": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "19c45b58-7803-42e4-936f-055eb40038f2",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.007325968992248062,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "gpu_destination": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "013fee6c-7421-4ecc-a3db-37d7989dcced",
+            "event_type": "P2PStepEvent",
+            "handler_type": "P2PStepHandler",
+            "applying_time": 0.007325968992248062,
+            "data_size": 1
+        },
+        {
+            "uuid": "a9a76e0c-d685-46c8-9065-b7c8e6118f26",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.007325968992248062,
+            "transfer_time": 0.0010999999999999998,
+            "gpu_source": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "gpu_destination": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "data_size": 1
+        },
+        {
+            "uuid": "470a6789-bf36-491e-ad43-c7e3686889b2",
+            "event_type": "P2PStepEvent",
+            "handler_type": "P2PStepHandler",
+            "applying_time": 0.007325968992248062,
+            "data_size": 1
+        },
+        {
+            "uuid": "8ba9fdbd-9eaa-486b-aeba-4adc649605a5",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.007325968992248062,
+            "transfer_time": 0.0010999999999999998,
+            "gpu_source": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "gpu_destination": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "data_size": 1
+        },
+        {
+            "uuid": "e4b869b0-c9cc-4a48-91fb-cd82685fb883",
+            "event_type": "P2PStepEvent",
+            "handler_type": "P2PStepHandler",
+            "applying_time": 0.007325968992248062,
+            "data_size": 1
+        },
+        {
+            "uuid": "d7d36595-f661-4209-9487-2e5c757e03bd",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.007325968992248062,
+            "transfer_time": 0.008751937984496125,
+            "gpu_source": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "gpu_destination": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "data_size": 1
+        },
+        {
+            "uuid": "207c8a07-e753-4880-af8b-4fe91756354d",
+            "event_type": "P2PStepEvent",
+            "handler_type": "P2PStepHandler",
+            "applying_time": 0.007325968992248062,
+            "data_size": 1
+        },
+        {
+            "uuid": "06621e08-a107-4f8f-a062-8e0be9a2a96c",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.007325968992248062,
+            "transfer_time": 0.008751937984496125,
+            "gpu_source": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "gpu_destination": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "data_size": 1
+        },
+        {
+            "uuid": "955408c6-60df-40e0-93c1-39846c6b6014",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.007325968992248062,
+            "data_size": 1
+        },
+        {
+            "uuid": "6f734900-2689-4cca-9fa6-df1e987463ba",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.007325968992248062,
+            "transfer_time": 0.000725,
+            "gpu_source": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "gpu_destination": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "4eac8c63-cadb-49ea-b100-5bf77ef5cfb2",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.007325968992248062,
+            "transfer_time": 0.000725,
+            "gpu_source": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "gpu_destination": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "fcca580c-1adb-48ac-93ff-6f9af788f2a1",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.008050968992248062,
+            "data_size": 1
+        },
+        {
+            "uuid": "5a567df7-c938-41ca-adae-dff23062b3c7",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.008050968992248062,
+            "transfer_time": 0.000725,
+            "gpu_source": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "gpu_destination": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "b60a30c1-b606-4866-b2e8-bbde25c31dc5",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.008050968992248062,
+            "transfer_time": 0.000725,
+            "gpu_source": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "gpu_destination": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "e0137e04-1bea-4315-a933-0f729df6618a",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.008050968992248062,
+            "data_size": 1
+        },
+        {
+            "uuid": "08ea2f6f-52ec-4e58-9d90-9954d2755a66",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.008050968992248062,
+            "transfer_time": 0.000725,
+            "gpu_source": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "gpu_destination": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "d0fa612e-8c88-457d-8166-3c94e798fb94",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.008050968992248062,
+            "transfer_time": 0.000725,
+            "gpu_source": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "gpu_destination": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "7e0dc457-07f0-4f39-bdf0-52db0f93948b",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.008775968992248062,
+            "data_size": 1
+        },
+        {
+            "uuid": "123d249e-2528-4cd5-84ec-e7c2dbc6379c",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.008775968992248062,
+            "transfer_time": 0.000725,
+            "gpu_source": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "gpu_destination": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "23630791-0e9b-41f8-ade5-010aa3b86956",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.008775968992248062,
+            "transfer_time": 0.000725,
+            "gpu_source": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "gpu_destination": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "1428b746-145e-49e7-94d2-f226bd86adc2",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.008775968992248062,
+            "data_size": 1
+        },
+        {
+            "uuid": "bfeb13c6-e4d7-4247-85a7-c891b502a329",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.008775968992248062,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "gpu_destination": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "7c196d90-5cd8-438e-8ecb-e36035492325",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.008775968992248062,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "gpu_destination": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "517df4e2-13c9-4964-ba71-9f7bdf02a155",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.011713953488372092,
+            "data_size": 1
+        },
+        {
+            "uuid": "30dfb99c-b171-4170-9803-6750471d25ee",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.011713953488372092,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "gpu_destination": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "49604d4c-b8cf-4756-89aa-368594bb4908",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.011713953488372092,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "gpu_destination": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "abe10ea5-17ac-420b-baff-e7f64c790b25",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.011713953488372092,
+            "data_size": 1
+        },
+        {
+            "uuid": "98bc68c6-4f76-4c64-b8d1-7920110ea8c2",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.011713953488372092,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "gpu_destination": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "96a30b48-5956-40cc-8f55-9eefd5ef473f",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.011713953488372092,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "gpu_destination": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "5df8a81c-8ef2-492f-89f8-daad965a72ac",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.014651937984496124,
+            "data_size": 1
+        },
+        {
+            "uuid": "efd88ea6-6903-414d-8e95-435884c12526",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.014651937984496124,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "gpu_destination": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "b554239a-8eed-42a5-8c9d-6472e5fc191d",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.014651937984496124,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "gpu_destination": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "3fc5f319-eadd-424d-8945-7b72a56ec4f0",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.014651937984496124,
+            "data_size": 1
+        },
+        {
+            "uuid": "81c6a43f-2ad3-4974-98c9-cabc36a820fa",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.014651937984496124,
+            "transfer_time": 0.000725,
+            "gpu_source": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "gpu_destination": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "9d18ac33-a9fe-4dbc-9f52-6fd7b2aab5aa",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.014651937984496124,
+            "transfer_time": 0.000725,
+            "gpu_source": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "gpu_destination": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "0aab4bc0-3ff9-49e1-a9ea-3c32ab321c6e",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.015376937984496124,
+            "data_size": 1
+        },
+        {
+            "uuid": "bc075d3d-e66e-49ca-8ba4-4e5aa3e0f4b3",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.015376937984496124,
+            "transfer_time": 0.000725,
+            "gpu_source": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "gpu_destination": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "01ac8d06-2c0e-412a-bf47-a297f97e18cb",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.015376937984496124,
+            "transfer_time": 0.000725,
+            "gpu_source": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "gpu_destination": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "d59befa7-d029-451b-ab39-37d8ba7940bb",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.015376937984496124,
+            "data_size": 1
+        },
+        {
+            "uuid": "7c3a24de-202a-4942-9bb2-aec1f979c637",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.015376937984496124,
+            "transfer_time": 0.000725,
+            "gpu_source": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "gpu_destination": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "8b58d3a0-ee46-419d-b961-8e04d3c5d40e",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.015376937984496124,
+            "transfer_time": 0.000725,
+            "gpu_source": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "gpu_destination": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "fbc11c09-b694-4590-9ac0-0da7cd34e961",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.016101937984496124,
+            "data_size": 1
+        },
+        {
+            "uuid": "33591e55-5f0a-4618-a9d6-d4ec60c9d8b1",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.016101937984496124,
+            "transfer_time": 0.000725,
+            "gpu_source": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "gpu_destination": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "69eaced5-990b-4f8e-8201-76bf4d6bdd0b",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.016101937984496124,
+            "transfer_time": 0.000725,
+            "gpu_source": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "gpu_destination": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "c5462e37-611c-474e-a3a3-770d900a96ed",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.016101937984496124,
+            "data_size": 1
+        },
+        {
+            "uuid": "896ca565-d5c9-40c8-b30f-6f7d3b9bf93b",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.016101937984496124,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "gpu_destination": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "5eece85e-c6f3-447c-80a4-6f1859cfd603",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.016101937984496124,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "gpu_destination": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "b9d7678d-f20d-4549-a7f4-c1a5d3055875",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.019039922480620156,
+            "data_size": 1
+        },
+        {
+            "uuid": "25e31ec3-21f8-4aa8-ac9f-92209e048463",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.019039922480620156,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "gpu_destination": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "4e8d765b-9df5-4125-88d8-967cc17e3b56",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.019039922480620156,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "d7683644-8ae5-41f1-83dd-b94290ec8ed5",
+            "gpu_destination": "8e56e8a0-1ebe-4a4d-90df-b139376b3a0d",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "ce52cbae-fb69-43d8-8d96-dc1f2e709d51",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.019039922480620156,
+            "data_size": 1
+        },
+        {
+            "uuid": "bec1a639-7a14-4d53-a6de-94e835ce60f8",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.019039922480620156,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "gpu_destination": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "52d70177-1b79-41a8-8f6b-bbd71f31ee16",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.019039922480620156,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "gpu_destination": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "9befb64f-c001-4319-aa51-d9997e0b777f",
+            "event_type": "AllReduceStepEvent",
+            "handler_type": "AllReduceStepHandler",
+            "method": "RING",
+            "applying_time": 0.021977906976744187,
+            "data_size": 1
+        },
+        {
+            "uuid": "1d9e32d0-5819-42fd-8b48-c74df68c2bfd",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.021977906976744187,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "gpu_destination": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "data_size": 0.25
+        },
+        {
+            "uuid": "d878183e-d16e-4cb9-9a7e-10072a810e8e",
+            "event_type": "DataTransferEvent",
+            "handler_type": "DataTransferHandler",
+            "applying_time": 0.021977906976744187,
+            "transfer_time": 0.002937984496124031,
+            "gpu_source": "26a2fb15-f669-4da0-8b03-2d823cbfb168",
+            "gpu_destination": "9f85a5af-a1ea-4191-975d-6db7bd34305a",
+            "data_size": 0.25
+        }
+    ]
+}

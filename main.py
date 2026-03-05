@@ -1,5 +1,5 @@
 from lib.src.network_lib.utils.config import AppConfig
-from lib.src.network_lib.model.network import Network, NetworkManager
+from lib.src.network_lib.model.network import NetworkManager
 from lib.src.network_lib.model.model import Model
 from lib.src.network_lib.model.processor import Processor
 from lib.src.network_lib.handler.all_gather_handler import AllGatherStepHandler
@@ -9,7 +9,8 @@ from lib.src.network_lib.handler.p2p_handler import P2PStepHandler
 from lib.src.core.engine import Engine
 import argparse
 from lib.src.network_lib.model.topology_manager import TopologyManager
-from lib.src.network_lib.utils.primitives import Primitives
+from lib.src.network_lib.enums.primitives import Primitives
+from lib.test.temp.helper import *
 
 
 def create_sequence(collective_communication, engine, net_config, data_size):
@@ -20,8 +21,7 @@ def create_sequence(collective_communication, engine, net_config, data_size):
         size_per_group = 1 # placeholder
         for net in crt_networks:
             handler_class = get_handler_for_primitive(op.type)
-            # TODO : add support for p2p handler
-            if handler_class and handler_class != P2PStepHandler:
+            if handler_class:
                 start_events.append(
                     (handler_class(engine.future_event_list, is_start_handler=True),
                      op.algorithm,
@@ -56,7 +56,16 @@ if __name__ == '__main__':
     processors_in_cc = config.parallelism.TP * config.parallelism.DP
     processors = [Processor(i) for i in range(number_of_processors)]
     topology = TopologyManager(processors, config.parallelism.TP, config.parallelism.DP, config.parallelism.PP)
-    all_networks = NetworkManager(config.networks, topology)
+
+    necessary_groups = set()
+    for step in config.collective_communication:
+        if step.who == "tp":
+            necessary_groups.add("tp")
+        elif step.who == "dp":
+            necessary_groups.add("dp")
+        elif step.who == "pp":
+            necessary_groups.add("pp")
+    all_networks = NetworkManager(config.networks, topology, necessary_groups)
     sequence_of_actions = create_sequence(
         collective_communication=config.collective_communication,
         engine=sim_engine,
@@ -68,3 +77,5 @@ if __name__ == '__main__':
     sim_engine.init(filename_results, model)
     sim_engine.execute()
     sim_engine.save_statistic()
+
+    # describe_event_in_text(filename_results, processors)
