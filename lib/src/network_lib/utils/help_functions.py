@@ -1,4 +1,4 @@
-from lib.src.network_lib.utils.methods import Method
+from lib.src.network_lib.enums.methods import Method
 from numpy import log2
 
 
