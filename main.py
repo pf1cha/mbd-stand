@@ -10,7 +10,6 @@ from lib.src.core.engine import Engine
 import argparse
 from lib.src.network_lib.model.topology_manager import TopologyManager
 from lib.src.network_lib.enums.primitives import Primitives
-from lib.test.temp.helper import *
 
 
 def create_sequence(collective_communication, engine, net_config, data_size):
@@ -77,5 +76,3 @@ if __name__ == '__main__':
     sim_engine.init(filename_results, model)
     sim_engine.execute()
     sim_engine.save_statistic()
-
-    # describe_event_in_text(filename_results, processors)
