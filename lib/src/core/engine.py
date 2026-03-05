@@ -20,12 +20,15 @@ class Engine:
     def get_next_event_from_model(self):
         if self.future_event_list.is_empty():
             return self.model.get_next_handler()
-        return None, None, None
+        return None, None, None, None
 
     def next_step(self):
         next_event, method, data_size, net = self.get_next_event_from_model()
         if next_event:
-            next_event.do_on_start(self.clock.get_time(), network=net,
+            if method is None:
+                next_event.do_on_start(self.clock.get_time(), network=net, data_size=data_size)
+            else:
+                next_event.do_on_start(self.clock.get_time(), network=net,
                                    method=method, data_size=data_size)
 
     def execute(self):
