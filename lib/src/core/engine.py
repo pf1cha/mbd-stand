@@ -22,17 +22,17 @@ class Engine:
             return self.model.get_next_handler()
         return None, None, None
 
-    def next_step(self, network):
-        next_event, method, data_size = self.get_next_event_from_model()
+    def next_step(self):
+        next_event, method, data_size, net = self.get_next_event_from_model()
         if next_event:
-            next_event.do_on_start(self.clock.get_time(), network=network,
+            next_event.do_on_start(self.clock.get_time(), network=net,
                                    method=method, data_size=data_size)
 
-    def execute(self, network):
+    def execute(self):
         if len(self.model.handlers) < 1:
             raise Exception('No handlers defined in the model simulation!')
 
-        self.next_step(network)
+        self.next_step()
         while not self.future_event_list.is_empty():
             event = self.future_event_list.pop_event()
             self.clock.set_time(event.applying_time)
@@ -41,7 +41,7 @@ class Engine:
             event.action()
             self.stats.write_event(event)
             if self.future_event_list.is_empty():
-                self.next_step(network)
+                self.next_step()
 
     def save_statistic(self):
         self.stats.save_to_file()
