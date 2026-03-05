@@ -1,34 +1,46 @@
 from lib.src.network_lib.utils.config import AppConfig
-from lib.src.network_lib.model.network import Network
+from lib.src.network_lib.model.network import Network, NetworkManager
 from lib.src.network_lib.model.model import Model
 from lib.src.network_lib.model.processor import Processor
 from lib.src.network_lib.handler.all_gather_handler import AllGatherStepHandler
 from lib.src.network_lib.handler.all_reduce_handler import AllReduceStepHandler
 from lib.src.network_lib.handler.reduce_scatter_handler import ReduceScatterStepHandler
+from lib.src.network_lib.handler.p2p_handler import P2PStepHandler
 from lib.src.core.engine import Engine
 import argparse
+from lib.src.network_lib.model.topology_manager import TopologyManager
+from lib.src.network_lib.utils.primitives import Primitives
 
 
-def create_sequence(config, engine, total_groups):
+def create_sequence(collective_communication, engine, net_config, data_size):
     start_events = []
-    total_size = config.data.size
-    size_for_pipeline = total_size // total_groups
-    for op in config.collective_communication:
-        if op.type == "AllReduce":
-            start_events.append((AllReduceStepHandler(engine.future_event_list, is_start_handler=True),
-                                op.algorithm, size_for_pipeline))
-        elif op.type == "AllGather":
-            start_events.append((AllGatherStepHandler(engine.future_event_list, is_start_handler=True),
-                                op.algorithm, size_for_pipeline))
-        elif op.type == "ReduceScatter":
-            start_events.append((ReduceScatterStepHandler(engine.future_event_list, is_start_handler=True),
-                                op.algorithm, size_for_pipeline))
-        elif op.type == "p2p":
-            pass
-        else:
-            raise ValueError(f"Unknown operation {op.type}. Program supports only 'AllReduce', 'AllGather', "
-                             f"'ReduceScatter' and 'p2p'")
+    total_size = data_size
+    for op in collective_communication:
+        crt_networks = net_config.get_networks_by_type(op.who)
+        size_per_group = 1 # placeholder
+        for net in crt_networks:
+            handler_class = get_handler_for_primitive(op.type)
+            # TODO : add support for p2p handler
+            if handler_class and handler_class != P2PStepHandler:
+                start_events.append(
+                    (handler_class(engine.future_event_list, is_start_handler=True),
+                     op.algorithm,
+                     size_per_group,
+                     net,
+                     )
+                )
     return start_events
+
+
+def get_handler_for_primitive(primitive_type):
+    mapping = {
+        Primitives.ALL_REDUCE: AllReduceStepHandler,
+        Primitives.ALL_GATHER: AllGatherStepHandler,
+        Primitives.REDUCE_SCATTER: ReduceScatterStepHandler,
+        Primitives.P2P: P2PStepHandler,
+    }
+    return mapping.get(primitive_type)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -38,17 +50,21 @@ if __name__ == '__main__':
     path = args.config
     filename_results = args.output
     config = AppConfig.load(path)
-    for op in config.collective_communication:
-        print(f"{op.type}: {op.algorithm}")
 
-    engine = Engine()
+    sim_engine = Engine()
     number_of_processors = config.parallelism.TP * config.parallelism.DP * config.parallelism.PP
     processors_in_cc = config.parallelism.TP * config.parallelism.DP
-    processors = [Processor() for _ in range(number_of_processors)]
-    network = Network(config.network.bandwidth, config.network.latency, processors)
-
-    sequence_of_actions = create_sequence(config, engine, processors_in_cc)
+    processors = [Processor(i) for i in range(number_of_processors)]
+    topology = TopologyManager(processors, config.parallelism.TP, config.parallelism.DP, config.parallelism.PP)
+    all_networks = NetworkManager(config.networks, topology)
+    sequence_of_actions = create_sequence(
+        collective_communication=config.collective_communication,
+        engine=sim_engine,
+        net_config=all_networks,
+        data_size=config.data.size
+    )
     model = Model(sequence_of_actions)
-    engine.init(filename_results, model)
-    engine.execute(network)
-    engine.save_statistic()
+
+    sim_engine.init(filename_results, model)
+    sim_engine.execute()
+    sim_engine.save_statistic()
