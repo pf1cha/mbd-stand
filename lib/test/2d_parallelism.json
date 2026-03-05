@@ -1,0 +1,43 @@
+{
+    "parallelism":{
+        "TP":1,
+        "PP":2,
+        "DP":2
+    },
+    "data":{
+        "size":1048576
+    },
+    "networks":{
+        "intra-node":{
+            "latency":0.0006,
+            "bandwidth":2000.0,
+            "where": ["pp"]
+        },
+        "inter-node":{
+            "latency":0.001,
+            "bandwidth":129.0,
+            "where": ["dp"]
+        }
+    },
+    "collective_communication":[
+        {
+            "type":"AllGather",
+            "algorithm":"Halving-Doubling"
+        },
+        {
+            "type":"AllReduce",
+            "algorithm":"Ring"
+        },
+        {
+            "type":"P2P"
+        },
+        {
+            "type":"AllReduce",
+            "algorithm":"Ring"
+        },
+        {
+            "type":"AllReduce",
+            "algorithm":"Ring"
+        }
+    ]
+}
