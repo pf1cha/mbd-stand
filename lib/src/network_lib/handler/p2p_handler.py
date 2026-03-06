@@ -39,4 +39,4 @@ class P2PStepHandler(Handler):
         if data_size <= 0:
             raise ValueError("Data size must be a positive integer.")
         init_event = P2PStepEvent(applying_time, self, network, data_size)
-        self.add_event_to_fel(applying_time, init_event)
+        self.future_event_list.add_event(init_event)
