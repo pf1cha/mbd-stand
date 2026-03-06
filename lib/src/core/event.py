@@ -11,7 +11,7 @@ class Event:
         return self.applying_time < other.applying_time
 
     def action(self):
-        self.handler.do(self)
+        return self.handler.do(self)
 
     def to_json(self):
         pass
