@@ -15,20 +15,36 @@ def get_handler_for_primitive(primitive_type):
     return mapping.get(primitive_type)
 
 
-def create_sequence(collective_communication, engine, net_config, data_size):
+def get_batch_sizes(batch_size, topology):
+    global_batch = batch_size  # size for pipelines
+    minibatch = batch_size / topology.dp  # size for dp
+    microbatch = batch_size / (topology.dp * topology.tp)  # size for tp and dp
+    return [global_batch, minibatch, microbatch]
+
+
+def get_batch_for_parallelism(parallelism, data):
+    if parallelism == "pp":
+        return data[0]
+    elif parallelism == "dp":
+        return data[1]
+    return data[2]
+
+
+def create_sequence(collective_communication, engine, net_config, data):
     start_events = []
-    total_size = data_size
     for op in collective_communication:
         crt_networks = net_config.get_networks_by_type(op.who)
-        size_per_group = 1  # placeholder
+        size_per_group = get_batch_for_parallelism(op.who, data)
+        full_event = []
         for net in crt_networks:
             handler_class = get_handler_for_primitive(op.type)
             if handler_class:
-                start_events.append(
+                full_event.append(
                     (handler_class(engine.future_event_list, is_start_handler=True),
                      op.algorithm,
                      size_per_group,
                      net,
                      )
                 )
+        start_events.append(full_event)
     return start_events

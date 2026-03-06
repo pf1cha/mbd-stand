@@ -8,7 +8,7 @@ class Model:
 
     def get_next_handler(self):
         if self.index < self.length:
-            handler, method, data_size, network = self.handlers[self.index]
+            crt_events = self.handlers[self.index]
             self.index += 1
-            return handler, method, data_size, network
-        return None, None, None, None
+            return crt_events
+        return None

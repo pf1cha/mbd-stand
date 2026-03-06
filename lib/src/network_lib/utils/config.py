@@ -104,7 +104,7 @@ class AppConfig:
                 raise ValueError(f"Collective operation {step.type} is specified for TP but TP=1 in config. "
                                  f"If you want to use TP specify it in 'parallelism' section of config.")
             if step.who == "dp" and self.parallelism.DP == 1:
-                raise ValueError(f"Collective operation {step.type} is specified for DP but DP=1 in config."
+                raise ValueError(f"Collective operation {step.type} is specified for DP but DP=1 in config. "
                                  f"If you want to use DP specify it in 'parallelism' section of config.")
 
         if self.parallelism.TP == 1:

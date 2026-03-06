@@ -4,7 +4,7 @@ from lib.src.network_lib.model.network import NetworkManager
 from lib.src.network_lib.model.model import Model
 from lib.src.network_lib.model.processor import Processor
 from lib.src.network_lib.model.topology_manager import TopologyManager
-from lib.src.network_lib.utils.starter_helper import create_sequence
+from lib.src.network_lib.utils.starter_helper import create_sequence, get_batch_sizes
 from lib.src.network_lib.utils.config import AppConfig
 
 if __name__ == '__main__':
@@ -30,12 +30,14 @@ if __name__ == '__main__':
             necessary_groups.add("dp")
         elif step.who == "pp":
             necessary_groups.add("pp")
+
     all_networks = NetworkManager(config.networks, topology, necessary_groups)
+    batches = get_batch_sizes(config.data.size, topology)
     sequence_of_actions = create_sequence(
         collective_communication=config.collective_communication,
         engine=sim_engine,
         net_config=all_networks,
-        data_size=config.data.size
+        data=batches
     )
     model = Model(sequence_of_actions)
 

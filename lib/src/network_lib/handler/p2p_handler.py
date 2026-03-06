@@ -30,6 +30,7 @@ class P2PStepHandler(Handler):
         if event.crt_step == event.steps:
             return next_iteration
         self.add_event_to_fel(next_iteration, event)
+        return None
 
 
 

@@ -27,13 +27,14 @@ class AllGatherStepHandler(Handler):
         elif event.method == Method.HALVING_DOUBLING:
             applying_time = one_step_in_halving_doubling(self, event, 2)
             if event.crt_step == event.steps:
-                return
+                return None
             self.add_event_to_fel(applying_time, event)
         else:
             raise TypeError(
                 f"Unsupported method: {event.method}. "
                 f"Supported methods are: {Method.RING}, {Method.HALVING_DOUBLING}."
             )
+        return None
 
     def do_on_start(self, applying_time, network=None, method=None, data_size=0):
         if network is None or method is None or data_size == 0:

@@ -6,7 +6,7 @@ class DataTransferHandler(Handler):
         super().__init__(future_event_list)
 
     def do(self, event):
-        return
+        return event.applying_time + event.time
 
     def do_on_start(self, applying_time):
         return
