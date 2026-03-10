@@ -1,8 +1,8 @@
 {
     "parallelism":{
-        "TP":2,
+        "TP":1,
         "PP":4,
-        "DP":2
+        "DP":1
     },
     "data":{
         "size":1048576

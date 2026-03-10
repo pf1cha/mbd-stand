@@ -16,6 +16,7 @@ def get_handler_for_primitive(primitive_type):
 
 
 def get_batch_sizes(batch_size, topology):
+    # TODO check if i right here with batches for each
     global_batch = batch_size  # size for pipelines
     minibatch = batch_size / topology.dp  # size for dp
     microbatch = batch_size / (topology.dp * topology.tp)  # size for tp and dp

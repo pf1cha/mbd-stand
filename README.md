@@ -43,7 +43,8 @@ representation of the complex interactions between different components of the t
 - Support for various parallelism strategies, including data parallelism, model parallelism, and pipeline parallelism, 
 which enables users to explore different approaches to distributed training and their impact on performance.
 - Collective Algorithms. The simulator includes implementation of standard MPI/NCCL algorithms, like Ring and Halving-Doubling.
-- Network configuration. Users can configure network parameters such as latency and bandwidth.
+- Network configuration. Users can configure network parameters such as latency and bandwidth. 
+Also, user can specify different network to different parallelism strategies.
 - Structured output. JSON-based logs, which trace the process of training and allow users to visualise and analyse the results.
 ---
 
@@ -77,7 +78,7 @@ pip install -r requirements.txt
 To run a simulation, provide a configuration file and an output path for the logs.
 
 ```bash
-python main.py -o <output file> -c <config file>.json
+python main.py -o <output file>.json -c <config file>.yaml
 ```
 Arguments:
 * -c, --config: Path to the configuration file (YAML or JSON).
