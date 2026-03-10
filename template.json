@@ -1,0 +1,34 @@
+{
+  "parallelism": {
+    "TP": 1,
+    "PP": 4,
+    "DP": 4
+  },
+  "data": {
+    "size": 400
+  },
+  "network": {
+    "latency": 0.0005,
+    "bandwidth": 100.0
+  },
+  "collective_communication": [
+    {
+      "type": "P2P"
+    },
+    {
+      "type": "AllReduce",
+      "algorithm": "Ring"
+    },
+    {
+      "type": "ReduceScatter",
+      "algorithm": "HD"
+    },
+    {
+      "type": "AllGather",
+      "algorithm": "Ring"
+    },
+    {
+      "type": "P2P"
+    }
+  ]
+}

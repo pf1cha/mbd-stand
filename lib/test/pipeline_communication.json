@@ -1,0 +1,19 @@
+{
+    "parallelism":{
+        "TP":2,
+        "PP":4,
+        "DP":2
+    },
+    "data":{
+        "size":1048576
+    },
+    "networks":{
+        "latency":0.0005,
+        "bandwidth":100.0
+    },
+    "collective_communication":[
+        {
+            "type":"P2P"
+        }
+    ]
+}
