@@ -24,6 +24,7 @@ def one_step_in_halving_doubling(handler, event, type_of_alg=None):
     elif type_of_alg == 2:  # Doubling
         distance = 1 << (event.crt_step - 1)
         size_of_message = size_of_one_processor / (2 ** (event.steps - event.crt_step + 1))
+
     applying_time = halving_doubling_walk_improve(handler, event, distance, size_of_message)
     return applying_time
 
@@ -31,15 +32,23 @@ def one_step_in_halving_doubling(handler, event, type_of_alg=None):
 def halving_doubling_walk_improve(handler, event, step_size, chunk_size, index=0):
     if index == len(event.network.processors):
         return event.applying_time
+
     data_handler = DataTransferHandler(handler.future_event_list)
     recipient_index = index ^ step_size
-    new_event = DataTransferEvent(event.applying_time,
-                                  data_handler,
-                                  event.network.processors[index],
-                                  event.network.processors[recipient_index],
-                                  chunk_size,
-                                  event.network.bandwidth,
-                                  event.network.latency)
+    sender = event.network.processors[index]
+    receiver = event.network.processors[recipient_index]
+    bandwidth, latency = event.network.get_transfer_params(sender, receiver)
+    new_event = DataTransferEvent(
+        event.applying_time,
+        data_handler,
+        sender,
+        receiver,
+        chunk_size,
+        bandwidth,
+        latency,
+    )
     handler.future_event_list.add_event(new_event)
-    next_applying_time = halving_doubling_walk_improve(handler, event, step_size, chunk_size, index + 1)
+    next_applying_time = halving_doubling_walk_improve(
+        handler, event, step_size, chunk_size, index + 1
+    )
     return max(next_applying_time, new_event.time + event.applying_time)

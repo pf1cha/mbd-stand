@@ -7,8 +7,9 @@ def define_ring_direction(event, type_of_primitive):
         return 0
     elif type_of_primitive == 2:  # AllGather
         return 1
-    elif type_of_primitive == 3:  # AllReduce
-        return 0 if event.crt_step <= event.steps // 2 else 1
+    # AllReduce
+    return 0 if event.crt_step <= event.steps // 2 else 1
+
 
 
 def one_step_in_ring_improved(handler, event, type_of_primitive=None):
@@ -37,12 +38,16 @@ def ring_walk_improved(handler, event, data_size, index=0, direction=None):
         raise ValueError("Direction and data_size must be specified for improved ring walk.")
     if index >= len(event.network.processors):
         return event.applying_time
+
     sender, receiver = define_sender_receiver(event, index, direction)
     data_handler = DataTransferHandler(handler.future_event_list)
+
+    bandwidth, latency = event.network.get_transfer_params(sender, receiver)
+
     new_event = DataTransferEvent(
         event.applying_time, data_handler,
         sender, receiver, data_size,
-        event.network.bandwidth, event.network.latency
+        bandwidth, latency,
     )
     handler.future_event_list.add_event(new_event)
     next_applying_time = ring_walk_improved(handler, event, data_size, index + 1, direction)
