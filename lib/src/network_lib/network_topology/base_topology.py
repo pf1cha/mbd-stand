@@ -1,5 +1,5 @@
 from enum import Enum
-from lib.src.network_lib.model.processor import Processor
+from collections import defaultdict
 
 
 class CommunicationLevel(Enum):
@@ -28,6 +28,26 @@ class BaseTopology:
     def assign_processor(self, processor, node_id):
         self._processor_to_node[str(processor.uuid)] = node_id
 
+    def assign_processors_to_nodes(self, nodes):
+        self._processor_to_node.clear()
+
+        if len(nodes) > len(self._node_to_rack):
+
+            raise ValueError(
+                f"Невозможно назначить {len(nodes)} узлов: в текущей топологии "
+                f"всего {len(self._node_to_rack)} доступных узлов."
+            )
+
+        for node_id, processors_in_node in enumerate(nodes):
+            if len(processors_in_node) > self.gpus_per_node:
+                raise ValueError(
+                    f"В узле {node_id} находится {len(processors_in_node)} процессоров, "
+                    f"но топология поддерживает максимум {self.gpus_per_node} GPU на узел."
+                )
+
+            for proc in processors_in_node:
+                self.assign_processor(proc, node_id)
+
     def assign_processors_sequential(self, processors):
         if len(processors) > self.total_gpus:
             raise ValueError(
@@ -38,20 +58,24 @@ class BaseTopology:
             self.assign_processor(proc, i // self.gpus_per_node)
 
     def assign_processors_custom(self, uuid_to_node):
-        # TODO not working
+        self._processor_to_node.clear()
+        cleaned_map = {str(uid): int(node_id) for uid, node_id in uuid_to_node.items()}
+
         invalid = [
-            (uuid, node_id)
-            for uuid, node_id in uuid_to_node.items()
+            (uid, node_id)
+            for uid, node_id in cleaned_map.items()
             if node_id not in self._node_to_rack
         ]
+
         if invalid:
             bad_nodes = sorted({n for _, n in invalid})
             raise ValueError(
                 f"Custom assignment references node IDs that do not exist in "
                 f"this topology: {bad_nodes}.\n"
-                f"Valid node range: 0 – {max(self._node_to_rack)}"
+                f"Valid node range: 0 – {max(self._node_to_rack.keys()) if self._node_to_rack else 'None'}"
             )
-        self._processor_to_node.update(uuid_to_node)
+
+        self._processor_to_node.update(cleaned_map)
 
     def get_node_id(self, processor):
         key = str(processor.uuid)
@@ -61,6 +85,15 @@ class BaseTopology:
                 "Call assign_processors_sequential first."
             )
         return self._processor_to_node[key]
+
+    def get_rack_id(self, processor):
+        return self._node_to_rack[self.get_node_id(processor)]
+
+    def get_node_to_rack_map(self):
+        return dict(self._node_to_rack)
+
+    def get_num_nodes(self):
+        return len(self._node_to_rack)
 
     def total_gpus(self):
         pass
@@ -74,19 +107,33 @@ class BaseTopology:
     def get_level_params(self, level):
         pass
 
+    def print_structure(self):
+        pass
+
+    def print_node_assignment(self):
+        if not self._processor_to_node:
+            print("  [topology] No processors assigned yet.")
+            return
+
+        node_to_proc_uuids = defaultdict(list)
+        for proc_uuid, node_id in self._processor_to_node.items():
+            node_to_proc_uuids[node_id].append(proc_uuid)
+
+        print("  Processor Assignment Layout:")
+        print(f"  {'-' * 60}")
+        for node_id in sorted(node_to_proc_uuids.keys()):
+            rack_id = self._node_to_rack.get(node_id, -1)
+            uuids_str = ", ".join(sorted(node_to_proc_uuids[node_id]))
+            print(f"    node={node_id:3d}, rack={rack_id:3d}  |  processors (UUIDs): [{uuids_str}]")
+        print(f"  {'-' * 60}\n")
+
+    def print_full_info(self):
+        self.print_structure()
+        self.print_node_assignment()
+
     def get_latency(self, proc_a, proc_b):
         return self.get_level_params(self.get_communication_level(proc_a, proc_b))[0]
 
     def get_bandwidth(self, proc_a, proc_b):
         return self.get_level_params(self.get_communication_level(proc_a, proc_b))[1]
 
-    def describe_path(self, proc_a, proc_b):
-        level = self.get_communication_level(proc_a, proc_b)
-        hops = self.get_path_hops(proc_a, proc_b)
-        latency, bw = self.get_level_params(level)
-        return (
-            f"Level: {level.label():20s} | "
-            f"Hops: {hops} | "
-            f"Latency: {latency * 1e6:7.2f} µs | "
-            f"Bandwidth: {bw / 1e9:8.1f} GB/s"
-        )

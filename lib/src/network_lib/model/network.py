@@ -1,4 +1,4 @@
-from __future__ import annotations
+# TODO fix that class. Make it more logical
 
 
 class Network:

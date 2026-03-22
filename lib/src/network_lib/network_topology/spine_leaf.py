@@ -1,5 +1,4 @@
 from lib.src.network_lib.network_topology.base_topology import BaseTopology, CommunicationLevel
-from lib.src.network_lib.model.processor import Processor
 
 
 class SpineLeafTopology(BaseTopology):
@@ -10,6 +9,7 @@ class SpineLeafTopology(BaseTopology):
     }
 
     def __init__(
+            # TODO change all those parameters to one config
             self,
             num_spine,
             num_leaf,
@@ -25,6 +25,7 @@ class SpineLeafTopology(BaseTopology):
         self.num_spine = num_spine
         self.num_leaf = num_leaf
         self.servers_per_leaf = servers_per_leaf
+
         self._level_params = {
             CommunicationLevel.INTRA_NODE: (intra_node_latency, intra_node_bandwidth),
             CommunicationLevel.INTRA_RACK: (intra_rack_latency, intra_rack_bandwidth),
@@ -79,6 +80,40 @@ class SpineLeafTopology(BaseTopology):
             CommunicationLevel.INTRA_RACK,
             CommunicationLevel.INTER_RACK,
         ]
+
+    def print_structure(self):
+        sep = "-" * 60
+        print(f"\n  {sep}")
+        print(f"  Topology   : Spine-Leaf (Clos)")
+        print(f"  {sep}")
+        print(f"  Spine switches  : {self.num_spine}")
+        print(f"  Leaf switches   : {self.num_leaf}  (= racks)")
+        print(f"  Servers/rack    : {self.servers_per_leaf}")
+        print(f"  GPUs/server     : {self.gpus_per_node}")
+        print(f"  Total GPUs      : {self.total_gpus}")
+        print(f"  Total servers   : {self.num_leaf * self.servers_per_leaf}")
+        print(f"  {sep}")
+        print(f"  {'Level':<18}  {'Latency':>12}  {'Bandwidth':>12}  {'Hops':>5}  {'Capacity':>10}")
+        print(f"  {'-' * 18}  {'-' * 12}  {'-' * 12}  {'-' * 5}  {'-' * 10}")
+        for level in self.get_available_levels():
+            lat, bw = self._level_params[level]
+            hops = self._HOP_MAP[level]
+            cap = self.get_capacity(level)
+            print(
+                f"  {level.label():<18}  "
+                f"{lat:>9.6f} s  "
+                f"{bw:>9.1f} GB/s  "
+                f"{hops:>5}  "
+                f"{cap:>8} GPUs"
+            )
+        print(f"  {sep}")
+        print(f"  Rack structure:")
+        for rack_id in range(self.num_leaf):
+            nodes = [
+                n for n, r in self._node_to_rack.items() if r == rack_id
+            ]
+            print(f"    rack={rack_id:3d}  nodes: {sorted(nodes)}")
+        print(f"  {sep}\n")
 
     def __repr__(self):
         return (

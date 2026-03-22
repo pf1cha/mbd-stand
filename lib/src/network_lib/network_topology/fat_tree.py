@@ -13,7 +13,8 @@ class FatTreeTopology(BaseTopology):
     def __init__(self, k, gpus_per_node, intra_node_latency, intra_node_bandwidth,
                  intra_rack_latency, intra_rack_bandwidth, inter_rack_latency,
                  inter_rack_bandwidth, inter_pod_latency, inter_pod_bandwidth
-    ):
+                 ):
+        # TODO change all those parameters to one config
         if k % 2 != 0:
             raise ValueError(f"k must be even for a fat-tree topology, got k={k}.")
 
@@ -96,6 +97,46 @@ class FatTreeTopology(BaseTopology):
             CommunicationLevel.INTER_RACK,
             CommunicationLevel.INTER_POD,
         ]
+
+    def print_structure(self):
+        total_racks = self.num_pods * self.edge_per_pod
+        sep = "-" * 60
+        print(f"\n  {sep}")
+        print(f"  Topology   : Fat-Tree  (k={self.k})")
+        print(f"  {sep}")
+        print(f"  Pods                : {self.num_pods}")
+        print(f"  Edge switches/pod   : {self.edge_per_pod}")
+        print(f"  Agg switches/pod    : {self.agg_per_pod}")
+        print(f"  Core switches       : {self.num_core}")
+        print(f"  Total racks         : {total_racks}")
+        print(f"  Servers/rack        : {self.servers_per_edge}")
+        print(f"  GPUs/server         : {self.gpus_per_node}")
+        print(f"  Total GPUs          : {self.total_gpus}")
+        print(f"  Total servers       : {total_racks * self.servers_per_edge}")
+        print(f"  {sep}")
+        print(f"  {'Level':<18}  {'Latency':>12}  {'Bandwidth':>12}  {'Hops':>5}  {'Capacity':>10}")
+        print(f"  {'-' * 18}  {'-' * 12}  {'-' * 12}  {'-' * 5}  {'-' * 10}")
+        for level in self.get_available_levels():
+            lat, bw = self._level_params[level]
+            hops = self._HOP_MAP[level]
+            cap = self.get_capacity(level)
+            print(
+                f"  {level.label():<18}  "
+                f"{lat:>9.6f} µs  "
+                f"{bw:>9.1f} GB/s  "
+                f"{hops:>5}  "
+                f"{cap:>8} GPUs"
+            )
+        print(f"  {sep}")
+        print(f"  Pod / Rack structure:")
+        for pod_id in range(self.num_pods):
+            rack_ids = [
+                r for n, r in self._node_to_rack.items()
+                if self._node_to_pod.get(n) == pod_id
+            ]
+            unique_racks = sorted(set(rack_ids))
+            print(f"    pod={pod_id:2d}  racks: {unique_racks}")
+        print(f"  {sep}\n")
 
     def __repr__(self):
         total_racks = self.num_pods * self.edge_per_pod

@@ -50,5 +50,8 @@ def create_topology(topology_cfg, processors):
     return topology
 
 
-def create_topology_unassigned(topology_cfg):
-    return _build_topology(topology_cfg)
+
+def create_topology_from_nodes(topology_cfg, nodes_array):
+    topology = _build_topology(topology_cfg)
+    topology.assign_processors_to_nodes(nodes_array)
+    return topology
