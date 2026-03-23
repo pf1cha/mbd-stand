@@ -12,7 +12,7 @@ class FatTreeTopology(BaseTopology):
 
     def __init__(self, fat_tree_config):
         if fat_tree_config.k % 2 != 0:
-            raise ValueError(f"k must be even for a fat-tree topology, got k={k}.")
+            raise ValueError(f"k must be even for a fat-tree topology, got k={fat_tree_config.}.")
 
         self.k = fat_tree_config.k
         half_k = fat_tree_config.k // 2
