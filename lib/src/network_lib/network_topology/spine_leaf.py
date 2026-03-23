@@ -1,4 +1,5 @@
-from lib.src.network_lib.network_topology.base_topology import BaseTopology, CommunicationLevel
+from lib.src.network_lib.network_topology.base_topology import BaseTopology
+from lib.src.network_lib.enums.communication_level import CommunicationLevel
 
 
 class SpineLeafTopology(BaseTopology):
