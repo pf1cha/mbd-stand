@@ -12,7 +12,6 @@ class DataTransferEvent(Event):
         self.data_size = data_size
         self.bandwidth = bandwidth
         self.latency = latency
-        # TODO add latency here
         self.time = data_size / bandwidth + latency
 
     def to_json(self):
