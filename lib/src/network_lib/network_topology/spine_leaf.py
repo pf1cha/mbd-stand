@@ -8,34 +8,21 @@ class SpineLeafTopology(BaseTopology):
         CommunicationLevel.INTER_RACK: 4,
     }
 
-    def __init__(
-            # TODO change all those parameters to one config
-            self,
-            num_spine,
-            num_leaf,
-            servers_per_leaf,
-            gpus_per_node,
-            intra_node_latency,
-            intra_node_bandwidth,
-            intra_rack_latency,
-            intra_rack_bandwidth,
-            inter_rack_latency,
-            inter_rack_bandwidth,
-    ):
-        self.num_spine = num_spine
-        self.num_leaf = num_leaf
-        self.servers_per_leaf = servers_per_leaf
+    def __init__(self, spine_leaf_config):
+        self.num_spine = spine_leaf_config.num_spine
+        self.num_leaf = spine_leaf_config.num_leaf
+        self.servers_per_leaf = spine_leaf_config.servers_per_leaf
 
         self._level_params = {
-            CommunicationLevel.INTRA_NODE: (intra_node_latency, intra_node_bandwidth),
-            CommunicationLevel.INTRA_RACK: (intra_rack_latency, intra_rack_bandwidth),
-            CommunicationLevel.INTER_RACK: (inter_rack_latency, inter_rack_bandwidth),
+            CommunicationLevel.INTRA_NODE: (spine_leaf_config.intra_node_latency, spine_leaf_config.intra_node_bandwidth),
+            CommunicationLevel.INTRA_RACK: (spine_leaf_config.intra_rack_latency, spine_leaf_config.intra_rack_bandwidth),
+            CommunicationLevel.INTER_RACK: (spine_leaf_config.inter_rack_latency, spine_leaf_config.inter_rack_bandwidth),
         }
-        super().__init__(gpus_per_node)
+        super().__init__(spine_leaf_config.gpus_per_node)
 
-        for leaf_id in range(num_leaf):
-            for srv in range(servers_per_leaf):
-                node_id = leaf_id * servers_per_leaf + srv
+        for leaf_id in range(spine_leaf_config.num_leaf):
+            for srv in range(spine_leaf_config.servers_per_leaf):
+                node_id = leaf_id * spine_leaf_config.servers_per_leaf + srv
                 self._node_to_rack[node_id] = leaf_id
 
     def total_gpus(self):

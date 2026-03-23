@@ -1,5 +1,4 @@
 from lib.src.network_lib.network_topology.base_topology import BaseTopology, CommunicationLevel
-from lib.src.network_lib.model.processor import Processor
 
 
 class FatTreeTopology(BaseTopology):
@@ -10,18 +9,14 @@ class FatTreeTopology(BaseTopology):
         CommunicationLevel.INTER_POD: 6,
     }
 
-    def __init__(self, k, gpus_per_node, intra_node_latency, intra_node_bandwidth,
-                 intra_rack_latency, intra_rack_bandwidth, inter_rack_latency,
-                 inter_rack_bandwidth, inter_pod_latency, inter_pod_bandwidth
-                 ):
-        # TODO change all those parameters to one config
-        if k % 2 != 0:
+    def __init__(self, fat_tree_config):
+        if fat_tree_config.k % 2 != 0:
             raise ValueError(f"k must be even for a fat-tree topology, got k={k}.")
 
-        self.k = k
-        half_k = k // 2
+        self.k = fat_tree_config.k
+        half_k = fat_tree_config.k // 2
 
-        self.num_pods = k
+        self.num_pods = fat_tree_config.k
         self.edge_per_pod = half_k
         self.agg_per_pod = half_k
         self.num_core = half_k ** 2
@@ -29,13 +24,13 @@ class FatTreeTopology(BaseTopology):
         self.servers_per_pod = half_k * half_k
 
         self._level_params = {
-            CommunicationLevel.INTRA_NODE: (intra_node_latency, intra_node_bandwidth),
-            CommunicationLevel.INTRA_RACK: (intra_rack_latency, intra_rack_bandwidth),
-            CommunicationLevel.INTER_RACK: (inter_rack_latency, inter_rack_bandwidth),
-            CommunicationLevel.INTER_POD: (inter_pod_latency, inter_pod_bandwidth),
+            CommunicationLevel.INTRA_NODE: (fat_tree_config.intra_node_latency, fat_tree_config.intra_node_bandwidth),
+            CommunicationLevel.INTRA_RACK: (fat_tree_config.intra_rack_latency, fat_tree_config.intra_rack_bandwidth),
+            CommunicationLevel.INTER_RACK: (fat_tree_config.inter_rack_latency, fat_tree_config.inter_rack_bandwidth),
+            CommunicationLevel.INTER_POD: (fat_tree_config.inter_pod_latency, fat_tree_config.inter_pod_bandwidth),
         }
 
-        super().__init__(gpus_per_node)
+        super().__init__(fat_tree_config.gpus_per_node)
         self._node_to_pod = {}
         for pod in range(self.num_pods):
             for rack_in_pod in range(self.edge_per_pod):
