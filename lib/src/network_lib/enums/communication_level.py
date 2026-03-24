@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class CommunicationLevel(Enum):
     INTRA_NODE = "intra_node"
     INTRA_RACK = "intra_rack"
