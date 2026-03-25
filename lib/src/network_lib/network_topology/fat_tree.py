@@ -10,7 +10,7 @@ class FatTreeTopology(BaseTopology):
         CommunicationLevel.INTER_POD: 6,
     }
 
-    def __init__(self, fat_tree_config):
+    def __init__(self, fat_tree_config, gpus_per_node):
         if fat_tree_config.k % 2 != 0:
             raise ValueError(f"k must be even for a fat-tree topology, got k={fat_tree_config.k}.")
 
@@ -31,7 +31,7 @@ class FatTreeTopology(BaseTopology):
             CommunicationLevel.INTER_POD: (fat_tree_config.inter_pod_latency, fat_tree_config.inter_pod_bandwidth),
         }
 
-        super().__init__(fat_tree_config.gpus_per_node)
+        super().__init__(gpus_per_node)
         self._node_to_pod = {}
         for pod in range(self.num_pods):
             for rack_in_pod in range(self.edge_per_pod):

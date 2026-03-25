@@ -3,7 +3,8 @@ from lib.src.core.event import Event
 
 class DataTransferEvent(Event):
     # TODO get rid off class variables like source_id, target_id, latency, bandwidth. They are temporary solutions.
-    def __init__(self, applying_time, handler, source, target, data_size, bandwidth, latency):
+    def __init__(self, applying_time, handler, source, target,
+                 data_size, bandwidth, latency, parent_uuid=None, parent_type=None):
         super().__init__(applying_time, handler)
         self.source = str(source.uuid)
         self.source_id = source.id
@@ -13,6 +14,8 @@ class DataTransferEvent(Event):
         self.bandwidth = bandwidth
         self.latency = latency
         self.time = data_size / bandwidth + latency
+        self.parent_uuid = parent_uuid
+        self.parent_type = parent_type
 
     def to_json(self):
         return {
@@ -28,4 +31,6 @@ class DataTransferEvent(Event):
             "data_size": self.data_size,
             "bandwidth": self.bandwidth,
             "latency": self.latency,
+            "parent_uuid": self.parent_uuid,
+            "parent_type": self.parent_type,
         }

@@ -13,7 +13,7 @@ class ReduceScatterStepHandler(Handler):
     def add_event_to_fel(self, applying_time, event):
         self.future_event_list.add_event(
             ReduceScatterStepEvent(
-                applying_time, self, event.network, event.data_size,
+                applying_time, self, event.processors, event.topology, event.data_size,
                 event.method, event.steps, crt_step=event.crt_step + 1
             )
         )
@@ -35,16 +35,17 @@ class ReduceScatterStepHandler(Handler):
                 f"Supported methods are: {Method.RING}, {Method.HALVING_DOUBLING}."
             )
 
-    def do_on_start(self, applying_time, network=None, method=None, data_size=0):
-        if network is None or method is None or data_size == 0:
-            raise ValueError("Network and method must be provided for the start event.")
-        total_steps = count_steps(method, len(network.processors))
+    def do_on_start(self, applying_time, processors=None, topology=None, method=None, data_size=0):
+        if not processors or not topology:
+            raise ValueError("Processors and topology must be provided.")
+        total_steps = count_steps(method, len(processors))
         if total_steps is None:
             raise ValueError("Number of steps is not defined or number of processors is not a power of two.")
         init_event = ReduceScatterStepEvent(
             applying_time=applying_time,
             handler=self,
-            network=network,
+            processors=processors,
+            topology=topology,
             data_size=data_size,
             steps=total_steps,
             method=method,

@@ -29,12 +29,15 @@ class Engine:
                 next_event = event[0]
                 method = event[1]
                 data_size = event[2]
-                net = event[3]
+                processors = event[3]
+                topology = event[4]
+
                 if method is None:
-                    next_event.do_on_start(self.clock.get_time(), network=net, data_size=data_size)
+                    next_event.do_on_start(self.clock.get_time(), processors=processors, topology=topology,
+                                           data_size=data_size)
                 else:
-                    next_event.do_on_start(self.clock.get_time(), network=net,
-                                       method=method, data_size=data_size)
+                    next_event.do_on_start(self.clock.get_time(), processors=processors, topology=topology,
+                                           method=method, data_size=data_size)
 
     def execute(self):
         if len(self.model.handlers) < 1:

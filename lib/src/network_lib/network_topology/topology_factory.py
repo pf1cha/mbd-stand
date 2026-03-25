@@ -9,11 +9,11 @@ def _build_topology(topology_cfg):
 
     if topo_type == "spine_leaf":
         sl = topology_cfg.spine_leaf
-        return SpineLeafTopology(sl)
+        return SpineLeafTopology(sl, topology_cfg.gpus_per_node)
 
     elif topo_type == "fat_tree":
         ft = topology_cfg.fat_tree
-        return FatTreeTopology(ft)
+        return FatTreeTopology(ft, topology_cfg.gpus_per_node)
 
     else:
         raise ValueError(

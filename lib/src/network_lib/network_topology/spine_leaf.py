@@ -9,7 +9,7 @@ class SpineLeafTopology(BaseTopology):
         CommunicationLevel.INTER_RACK: 4,
     }
 
-    def __init__(self, spine_leaf_config):
+    def __init__(self, spine_leaf_config, gpus_per_node):
         self.num_spine = spine_leaf_config.num_spine
         self.num_leaf = spine_leaf_config.num_leaf
         self.servers_per_leaf = spine_leaf_config.servers_per_leaf
@@ -19,7 +19,7 @@ class SpineLeafTopology(BaseTopology):
             CommunicationLevel.INTRA_RACK: (spine_leaf_config.intra_rack_latency, spine_leaf_config.intra_rack_bandwidth),
             CommunicationLevel.INTER_RACK: (spine_leaf_config.inter_rack_latency, spine_leaf_config.inter_rack_bandwidth),
         }
-        super().__init__(spine_leaf_config.gpus_per_node)
+        super().__init__(gpus_per_node)
 
         for leaf_id in range(spine_leaf_config.num_leaf):
             for srv in range(spine_leaf_config.servers_per_leaf):

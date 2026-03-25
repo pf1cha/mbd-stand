@@ -16,7 +16,6 @@ class ParallelismManager:
         self.dp_groups = self._build_groups_if_needed(self.dp, self._build_dp_groups)
         self.pp_pipes = self._build_groups_if_needed(self.pp, self._build_pp_pipes)
 
-
     def _build_groups_if_needed(self, size, builder_func):
         return builder_func() if size > 1 else None
 
@@ -46,8 +45,8 @@ class ParallelismManager:
 
     def print_groups(self):
         print(f"TP groups: {len(self.tp_groups) if self.tp_groups else 'N/A'}, "
-                f"DP groups: {len(self.dp_groups) if self.dp_groups else 'N/A'}, "
-                f"PP pipes: {len(self.pp_pipes) if self.pp_pipes else 'N/A'}")
+              f"DP groups: {len(self.dp_groups) if self.dp_groups else 'N/A'}, "
+              f"PP pipes: {len(self.pp_pipes) if self.pp_pipes else 'N/A'}")
         print("TP groups:")
         for i, group in enumerate(self.tp_groups or []):
             print(f"  Group {i}: {[str(proc.id) for proc in group]}")
@@ -57,3 +56,11 @@ class ParallelismManager:
         print("PP pipes:")
         for i, pipe in enumerate(self.pp_pipes or []):
             print(f"  Pipe {i}: {[str(proc.id) for proc in pipe]}")
+
+    def get_groups_by_type(self, parallelism_type):
+        mapping = {
+            'tp': self.tp_groups,
+            'dp': self.dp_groups,
+            'pp': self.pp_pipes
+        }
+        return mapping.get(parallelism_type) or []

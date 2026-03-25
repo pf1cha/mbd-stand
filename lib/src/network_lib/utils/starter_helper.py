@@ -34,20 +34,24 @@ def get_batch_for_parallelism(parallelism, data):
     return data[2]
 
 
-def create_sequence(collective_communication, engine, net_config, data):
+def create_sequence(collective_communication, engine, topo_mgr, topology, data):
     start_events = []
     for op in collective_communication:
-        crt_networks = net_config.get_networks_by_type(op.who)
+        crt_groups = topo_mgr.get_groups_by_type(op.who)
+        if not crt_groups:
+            continue
+
         size_per_group = get_batch_for_parallelism(op.who, data)
         full_event = []
-        for net in crt_networks:
+        for proc_group in crt_groups:
             handler_class = get_handler_for_primitive(op.type)
             if handler_class:
                 full_event.append(
                     (handler_class(engine.future_event_list, is_start_handler=True),
                      op.algorithm,
                      size_per_group,
-                     net,
+                     proc_group,
+                     topology
                      )
                 )
         start_events.append(full_event)

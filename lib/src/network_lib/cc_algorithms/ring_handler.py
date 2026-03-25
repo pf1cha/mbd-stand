@@ -15,7 +15,7 @@ def define_ring_direction(event, type_of_primitive):
 def one_step_in_ring_improved(handler, event, type_of_primitive=None):
     # Assuming that the data is divided into equal chunks and each processor sends its own chunk
     # direction: 0 for clockwise, 1 for counter-clockwise
-    data_size = event.data_size / (len(event.network.processors) ** 2)
+    data_size = event.data_size / (len(event.processors) ** 2)
     index = 0
     direction = define_ring_direction(event, type_of_primitive)
     applying_time = ring_walk_improved(handler, event, data_size, index, direction)
@@ -25,29 +25,32 @@ def one_step_in_ring_improved(handler, event, type_of_primitive=None):
 def define_sender_receiver(event, index, direction):
     sender, receiver = None, None
     if direction == 0:  # Clockwise
-        sender = event.network.processors[index]
-        receiver = event.network.processors[(index + 1) % len(event.network.processors)]
+        sender = event.processors[index]
+        receiver = event.processors[(index + 1) % len(event.processors)]
     elif direction == 1:
-        sender = event.network.processors[index]
-        receiver = event.network.processors[(index - 1) % len(event.network.processors)]
+        sender = event.processors[index]
+        receiver = event.processors[(index - 1) % len(event.processors)]
     return sender, receiver
 
 
 def ring_walk_improved(handler, event, data_size, index=0, direction=None):
     if direction is None or data_size is None:
         raise ValueError("Direction and data_size must be specified for improved ring walk.")
-    if index >= len(event.network.processors):
+    if index >= len(event.processors):
         return event.applying_time
 
     sender, receiver = define_sender_receiver(event, index, direction)
     data_handler = DataTransferHandler(handler.future_event_list)
 
-    bandwidth, latency = event.network.get_transfer_params(sender, receiver)
+    bandwidth = event.topology.get_bandwidth(sender, receiver)
+    latency = event.topology.get_latency(sender, receiver)
 
     new_event = DataTransferEvent(
         event.applying_time, data_handler,
         sender, receiver, data_size,
         bandwidth, latency,
+        parent_uuid=str(event.uuid),
+        parent_type=type(event).__name__
     )
     handler.future_event_list.add_event(new_event)
     next_applying_time = ring_walk_improved(handler, event, data_size, index + 1, direction)
