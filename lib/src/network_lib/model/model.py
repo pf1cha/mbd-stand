@@ -1,5 +1,3 @@
-
-
 class Model:
     def __init__(self, events):
         self.handlers = events
