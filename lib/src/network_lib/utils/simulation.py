@@ -44,7 +44,7 @@ def run_single(config, output_path):
 
 def run_iteration_of_experiment(layout, config, output_path, topo_mgr, nodes):
     cluster_topology = create_topology_from_nodes(config.cluster_topology, nodes)
-    cluster_topology.print_full_info()
+    # cluster_topology.print_full_info()
     sim_engine = Engine()
     batches = get_batch_sizes(config.data.size, topo_mgr)
     sequence = create_sequence(

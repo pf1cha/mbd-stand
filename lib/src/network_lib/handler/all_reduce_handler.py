@@ -1,6 +1,6 @@
 from lib.src.core.handler import Handler
 from lib.src.network_lib.event.all_reduce_event import AllReduceStepEvent
-from lib.src.network_lib.cc_algorithms.ring_handler import one_step_in_ring_improved
+from lib.src.network_lib.cc_algorithms.ring_handler import one_step_in_ring
 from lib.src.network_lib.cc_algorithms.halving_doubling_handler import one_step_in_halving_doubling
 from lib.src.network_lib.enums.methods import Method
 from lib.src.network_lib.utils.help_functions import count_steps
@@ -20,7 +20,7 @@ class AllReduceStepHandler(Handler):
 
     def do(self, event):
         if event.method == Method.RING:
-            applying_time = one_step_in_ring_improved(self, event, 3)
+            applying_time = one_step_in_ring(self, event, 3)
             if event.crt_step == event.steps:
                 return applying_time
             self.add_event_to_fel(applying_time, event)

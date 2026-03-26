@@ -20,10 +20,10 @@ def get_batch_sizes(batch_size, topology):
     # global_batch = batch_size  # size for pipelines
     # minibatch = batch_size / topology.dp  # size for dp
     # microbatch = batch_size / (topology.dp * topology.tp)  # size for tp and dp
-    global_batch = batch_size / (topology.dp * topology.pp)
-    minibatch = batch_size / topology.tp
-    microbatch = batch_size / (topology.dp * topology.tp)
-    return [global_batch, minibatch, microbatch]
+    pp_batch = batch_size / (topology.dp * topology.tp)
+    dp_batch = batch_size / (topology.tp * topology.pp)
+    tp_batch = batch_size / topology.dp
+    return [pp_batch, dp_batch, tp_batch]
 
 
 def get_batch_for_parallelism(parallelism, data):

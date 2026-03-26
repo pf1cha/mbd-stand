@@ -12,13 +12,13 @@ def define_ring_direction(event, type_of_primitive):
 
 
 
-def one_step_in_ring_improved(handler, event, type_of_primitive=None):
+def one_step_in_ring(handler, event, type_of_primitive=None):
     # Assuming that the data is divided into equal chunks and each processor sends its own chunk
     # direction: 0 for clockwise, 1 for counter-clockwise
-    data_size = event.data_size / (len(event.processors) ** 2)
+    data_size = event.data_size / (len(event.processors))
     index = 0
     direction = define_ring_direction(event, type_of_primitive)
-    applying_time = ring_walk_improved(handler, event, data_size, index, direction)
+    applying_time = ring_walk(handler, event, data_size, index, direction)
     return applying_time
 
 
@@ -33,7 +33,7 @@ def define_sender_receiver(event, index, direction):
     return sender, receiver
 
 
-def ring_walk_improved(handler, event, data_size, index=0, direction=None):
+def ring_walk(handler, event, data_size, index=0, direction=None):
     if direction is None or data_size is None:
         raise ValueError("Direction and data_size must be specified for improved ring walk.")
     if index >= len(event.processors):
@@ -44,7 +44,6 @@ def ring_walk_improved(handler, event, data_size, index=0, direction=None):
 
     bandwidth = event.topology.get_bandwidth(sender, receiver)
     latency = event.topology.get_latency(sender, receiver)
-
     new_event = DataTransferEvent(
         event.applying_time, data_handler,
         sender, receiver, data_size,
@@ -53,5 +52,5 @@ def ring_walk_improved(handler, event, data_size, index=0, direction=None):
         parent_type=type(event).__name__
     )
     handler.future_event_list.add_event(new_event)
-    next_applying_time = ring_walk_improved(handler, event, data_size, index + 1, direction)
+    next_applying_time = ring_walk(handler, event, data_size, index + 1, direction)
     return max(next_applying_time, new_event.time + event.applying_time)
