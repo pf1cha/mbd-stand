@@ -56,4 +56,4 @@ class Engine:
                 self.next_step()
 
     def save_statistic(self):
-        self.stats.save_to_file()
+        self.stats.save_to_file(total_time=self.clock.get_time())
