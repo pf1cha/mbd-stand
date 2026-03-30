@@ -20,13 +20,6 @@ class DataConfig:
 
 
 @dataclass
-class SingleNetworkConfig:
-    latency: float
-    bandwidth: float
-    where: Optional[List[str]] = None
-
-
-@dataclass
 class CollectiveOp:
     type: Primitives
     algorithm: Optional[Method] = None
@@ -35,21 +28,85 @@ class CollectiveOp:
     def __post_init__(self):
         if isinstance(self.type, str):
             self.type = Primitives.from_string(self.type)
-
         if isinstance(self.algorithm, str):
             self.algorithm = Method.from_string(self.algorithm)
-
         if isinstance(self.who, str):
             self.who = self.who.lower()
             if self.who not in ['tp', 'dp', 'pp']:
-                raise ValueError(f"Invalid 'who' value: {self.who}. Must be one of 'tp', 'dp', or 'pp'.")
+                raise ValueError(
+                    f"Invalid 'who' value: '{self.who}'. Must be one of 'tp', 'dp', 'pp'."
+                )
+
+
+@dataclass
+class SingleNetworkConfig:
+    latency: float
+    bandwidth: float
+    where: Optional[List[str]] = None
+
+
+@dataclass
+class SpineLeafNetworkConfig:
+    num_spine: int
+    num_leaf: int
+    servers_per_leaf: int
+    intra_node_latency: float
+    intra_node_bandwidth: float
+    intra_rack_latency: float
+    intra_rack_bandwidth: float
+    inter_rack_latency: float
+    inter_rack_bandwidth: float
+
+
+@dataclass
+class FatTreeNetworkConfig:
+    k: int
+    intra_node_latency: float
+    intra_node_bandwidth: float
+    intra_rack_latency: float
+    intra_rack_bandwidth: float
+    inter_rack_latency: float
+    inter_rack_bandwidth: float
+    inter_pod_latency: float
+    inter_pod_bandwidth: float
+
+
+@dataclass
+class ClusterTopologyConfig:
+    type: str
+    gpus_per_node: int
+    spine_leaf: Optional[SpineLeafNetworkConfig] = None
+    fat_tree: Optional[FatTreeNetworkConfig] = None
+
+    def __post_init__(self):
+        if isinstance(self.spine_leaf, dict):
+            self.spine_leaf = SpineLeafNetworkConfig(**self.spine_leaf)
+        if isinstance(self.fat_tree, dict):
+            self.fat_tree = FatTreeNetworkConfig(**self.fat_tree)
+
+        topo_type = self.type.lower().replace("-", "_").replace(" ", "_")
+        if topo_type not in ("spine_leaf", "fat_tree"):
+            raise ValueError(
+                f"Unknown topology type '{self.type}'. "
+                "Supported values: 'spine_leaf', 'fat_tree'."
+            )
+        if topo_type == "spine_leaf" and self.spine_leaf is None:
+            raise ValueError(
+                "cluster_topology.type is 'spine_leaf' but the 'spine_leaf' "
+                "sub-section is missing from the config."
+            )
+        if topo_type == "fat_tree" and self.fat_tree is None:
+            raise ValueError(
+                "cluster_topology.type is 'fat_tree' but the 'fat_tree' "
+                "sub-section is missing from the config."
+            )
 
 
 @dataclass
 class AppConfig:
     parallelism: ParallelismConfig
     data: DataConfig
-    networks: List[SingleNetworkConfig] = field(default_factory=list)
+    cluster_topology: ClusterTopologyConfig  # REQUIRED
     collective_communication: List[CollectiveOp] = field(default_factory=list)
 
     def __post_init__(self):
@@ -59,69 +116,35 @@ class AppConfig:
         if isinstance(self.data, dict):
             self.data = DataConfig(**self.data)
 
-        # Автоматическое заполнение 'where' для одной сети, если она не указана
-        if len(self.networks) == 1 and self.networks[0].where is None:
-            auto_where = []
-            if self.parallelism.TP > 1:
-                auto_where.append('tp')
-            if self.parallelism.DP > 1:
-                auto_where.append('dp')
-            if self.parallelism.PP > 1:
-                auto_where.append('pp')
-            self.networks[0].where = auto_where
-            # print(f"Auto-filled 'where' for the single network: {self.networks[0].where}")
+        if isinstance(self.cluster_topology, dict):
+            self.cluster_topology = ClusterTopologyConfig(**self.cluster_topology)
 
-        if len(self.networks) > 1:
-            all_where = []
-            for net in self.networks:
-                if net.where is None:
-                    raise ValueError("Field 'where' is required when multiple networks are defined.")
-                all_where.extend(net.where)
-            seen = set()
-            duplicates = set()
-            for w in all_where:
-                if w in seen:
-                    duplicates.add(w)
-                seen.add(w)
-            if duplicates:
-                raise ValueError(f"Duplicate values in 'where' across networks: {list(duplicates)}")
-
-        if self.collective_communication and isinstance(self.collective_communication[0], dict):
+        if self.collective_communication and isinstance(
+                self.collective_communication[0], dict
+        ):
             self.collective_communication = [
                 CollectiveOp(**item) for item in self.collective_communication
             ]
-
-        if self.collective_communication and isinstance(self.collective_communication[0], dict):
-            self.collective_communication = [
-                CollectiveOp(**item) for item in self.collective_communication
-            ]
-
 
         for step in self.collective_communication:
             if step.type == Primitives.P2P and step.who is None:
                 step.who = 'pp'
             if step.who == "tp" and self.parallelism.TP == 1:
-                raise ValueError(f"Collective operation {step.type} is specified for TP but TP=1 in config. "
-                                 f"If you want to use TP specify it in 'parallelism' section of config.")
+                raise ValueError(
+                    f"Collective op '{step.type.name}' targets 'tp' but TP=1 in config. "
+                    "Either set TP > 1 in parallelism or change 'who'."
+                )
             if step.who == "dp" and self.parallelism.DP == 1:
-                raise ValueError(f"Collective operation {step.type} is specified for DP but DP=1 in config. "
-                                 f"If you want to use DP specify it in 'parallelism' section of config.")
-
-        if self.parallelism.TP == 1:
-            for step in self.collective_communication:
-                if step.type != Primitives.P2P:
-                    step.who = "dp"
-        if self.parallelism.DP == 1:
-            for step in self.collective_communication:
-                if step.type != Primitives.P2P:
-                    step.who = "tp"
+                raise ValueError(
+                    f"Collective op '{step.type.name}' targets 'dp' but DP=1 in config. "
+                    "Either set DP > 1 in parallelism or change 'who'."
+                )
 
         if self.parallelism.TP == 1 or self.parallelism.DP == 1:
-            new_receiver = 'dp' if self.parallelism.TP == 1 else 'tp'
+            redirect_to = 'dp' if self.parallelism.TP == 1 else 'tp'
             for step in self.collective_communication:
-                if step.type == Primitives.P2P:
-                    continue
-                step.who = new_receiver
+                if step.type != Primitives.P2P:
+                    step.who = redirect_to
 
     @classmethod
     def load(cls, path: str | Path) -> "AppConfig":
@@ -130,22 +153,20 @@ class AppConfig:
             raise FileNotFoundError(f"Config file not found: {path}")
 
         with open(path, 'r') as f:
-            if path.suffix in ['.yaml', '.yml']:
+            if path.suffix in ('.yaml', '.yml'):
                 data = yaml.safe_load(f)
             elif path.suffix == '.json':
                 data = json.load(f)
             else:
-                raise ValueError("Unsupported file format. Use .json or .yaml")
+                raise ValueError(
+                    f"Unsupported config format '{path.suffix}'. "
+                    "Use .yaml / .yml or .json."
+                )
 
-        networks_data = data.pop('networks', [])
-        if isinstance(networks_data, dict):
-            if 'latency' in networks_data and 'bandwidth' in networks_data:
-                data['networks'] = [SingleNetworkConfig(**networks_data)]
-            else:
-                data['networks'] = [
-                    SingleNetworkConfig(**v) for v in networks_data.values()
-                ]
-        elif isinstance(networks_data, list):
-            data['networks'] = [SingleNetworkConfig(**item) for item in networks_data]
+        if 'cluster_topology' not in data:
+            raise ValueError(
+                "Missing required field 'cluster_topology' in config file.\n"
+                "Every config must define the physical cluster topology.\n"
+            )
 
         return cls(**data)

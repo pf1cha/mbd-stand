@@ -11,10 +11,11 @@ class Statistic:
         event_data = event.to_json()
         self.events.append(event_data)
 
-    def save_to_file(self):
+    def save_to_file(self, total_time):
         data = {
             "engine_id": str(self.engine_id),
-            "events": self.events
+            "events": self.events,
+            "total_time": total_time
         }
         with open(self.filename, "w") as file:
             dump(data, file, indent=4)
